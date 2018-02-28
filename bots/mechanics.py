@@ -3,6 +3,11 @@ contains various functions for game mechanics related computations
 """
 from models import Player, Robot, Battle
 
+# constants for robot types to be used so that database doesn't get corrupted accidently
+AERIAL = 'aerial'
+BIPEDAL = 'bipedal'
+WHEELED = 'wheeled'
+
 def battle(robot1, robot2):
     """
     Takes two robots, simulates a battle, and makes adjustments to database accordinngly.
