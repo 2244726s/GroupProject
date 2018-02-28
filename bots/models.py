@@ -26,12 +26,13 @@ class Robot(models.Model):
     wins = models.IntegerField(default = 0)
     losses= models.IntegerField(default = 0)
     # insert robot stats fields once game mechanics become clear
-    # planning on implementing it as a dictionary of stats 
+    # planning on implementing it as a dictionary of stats
     #e.g stats["strength"] = models.IntegerField()
-    stats = {
-        #"str" : models.IntegerField(),
-        #"wis" : models.IntegerField(),
-    }
+    speed = models.IntegerField()
+    dodge = models.IntegerField()
+    armour = models.IntegerField()
+    weapon = models.IntegerField()
+    accuracy = models.IntegerField()
     def __str__(self):
         return self.name
 
