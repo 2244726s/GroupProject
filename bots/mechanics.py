@@ -1,7 +1,7 @@
 """
 contains various functions for game mechanics related computations
 """
-from models import Player, Robot, Battle
+from bots.models import Player, Robot, Battle
 import math
 import random
 # constants for robot types to be used so that database doesn't get corrupted accidently
@@ -97,8 +97,8 @@ def attack(attacker,defender):
     hitChance = float(accuracy)/float(accuracy+dodge)
     if(hitChance > random.uniform(0,1)):
         if(attacker.type == AERIAL and defender.type == WHEELED):
-            return attacker.damage + 1
+            return attacker.weapon + 1
         else:
-            return attacker.damage
+            return attacker.weapon
     else:
         return 0
