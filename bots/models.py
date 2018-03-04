@@ -25,14 +25,23 @@ class Robot(models.Model):
     type = models.CharField(max_length = 10) # class of robot
     wins = models.IntegerField(default = 0)
     losses= models.IntegerField(default = 0)
-    # insert robot stats fields once game mechanics become clear
-    # planning on implementing it as a dictionary of stats
-    #e.g stats["strength"] = models.IntegerField()
+    # robot stats
     speed = models.IntegerField()
     dodge = models.IntegerField()
     armour = models.IntegerField()
     weapon = models.IntegerField()
     accuracy = models.IntegerField()
+    # returns dictionary with names of stats mapped to corresponding values
+    def get_stats(self):
+        stats = {
+            'speed' : self.speed,
+            'dodge': self.dodge,
+            'armour' : self.armour,
+            'weapon' : self.weapon,
+            'accuracy' : self.accuracy,
+        }
+        return stats
+    
     def __str__(self):
         return self.name
 
@@ -40,3 +49,15 @@ class Battle(models.Model):
     participants = models.ManyToManyField(Player)
     log = models.TextField()
     date = models.DateTimeField(auto_now_add = True)
+    def __str__(self):
+        result = ""
+        for p in self.participants.all():
+            if result == "":
+                result  = str(p)
+            else:
+                result += ' vs ' + str(p)
+        #end for
+        date = self.date.strftime('%d/%m %H:%M')        
+        result += ', ' + date
+        #result += ', ' + str(self.date)
+        return result
