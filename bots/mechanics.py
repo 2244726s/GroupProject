@@ -53,7 +53,7 @@ def battle(robot1, robot2):
         losing_robot = robot1
 
 
-    log = log + "/n %s has been Destroyed! %s is Victorious!"(losing_robot,winning_robot)
+    log = log + "/n %s has been Destroyed! %s is Victorious!" % (losing_robot,winning_robot)
 
 
     # update player robot statistics
@@ -81,9 +81,9 @@ def battle(robot1, robot2):
 
 def updateLog(attacker, defender, damage):
     if(damage > 0):
-        return "/n %s attacked %s for %d damage"(attacker.name, defender.name, damage)
+        return "/n %s attacked %s for %d damage" % (attacker.name, defender.name, damage)
     else:
-        return "/n %s dodged %s's attack"(defender.name, attacker.name, damage)
+        return "/n %s dodged %s's attack" % (defender.name, attacker.name)
 
 
 

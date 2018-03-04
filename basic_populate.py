@@ -25,9 +25,10 @@ p3.save()
 
 
 # make a robot for every player
-r = Robot.objects.get_or_create(owner =p1, name='r2d2', type = mechanics.WHEELED, value = 10,speed = 10, armour =5, dodge =1, weapon =5,accuracy =10)[0]
-r.save()
-r = Robot.objects.get_or_create(owner =p2, name='C3P0', type = mechanics.BIPEDAL, value = 10,speed = 5, armour =6, dodge =8, weapon =3,accuracy =5)[0]
-r.save()
-r = Robot.objects.get_or_create(owner =p3, name='HL2', type = mechanics.AERIAL, value = 10,speed = 20, armour =3, dodge =15, weapon =2,accuracy =5)[0]
-r.save()
+r1 = Robot.objects.get_or_create(owner =p1, name='r2d2', type = mechanics.WHEELED, value = 10,speed = 10, armour =5, dodge =1, weapon =5,accuracy =10)[0]
+r1.save()
+r2 = Robot.objects.get_or_create(owner =p2, name='C3P0', type = mechanics.BIPEDAL, value = 10,speed = 5, armour =6, dodge =8, weapon =3,accuracy =5)[0]
+r2.save()
+mechanics.battle(r1,r2)
+r1 = Robot.objects.get_or_create(owner =p3, name='HL2', type = mechanics.AERIAL, value = 10,speed = 20, armour =3, dodge =15, weapon =2,accuracy =5)[0]
+r1.save()
