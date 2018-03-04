@@ -1,10 +1,6 @@
 """
 contains various functions for game mechanics related computations
 """
-import os
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'GroupProject.settings')
-import django
-django.setup()
 
 from bots.models import Player, Robot, Battle
 import math
@@ -40,7 +36,7 @@ def battle(robot1, robot2):
             delay2 += robot2.speed
             log = log + updateLog(robot1,robot2,damage)
 
-        log = log + "/n new round"
+        log = log + "\n new round"
 
     if(health1 > 0):
         # robot1 won
@@ -53,7 +49,7 @@ def battle(robot1, robot2):
         losing_robot = robot1
 
 
-    log = log + "/n %s has been Destroyed! %s is Victorious!" % (losing_robot,winning_robot)
+    log = log + "\n %s has been Destroyed! %s is Victorious!" % (losing_robot,winning_robot)
 
 
     # update player robot statistics
@@ -74,6 +70,7 @@ def battle(robot1, robot2):
 
     # create Battle object storing info about the battle
     b = Battle(log = log)
+    b.save()
     b.participants.add(winner)
     b.participants.add(loser)
     b.save()
@@ -81,9 +78,9 @@ def battle(robot1, robot2):
 
 def updateLog(attacker, defender, damage):
     if(damage > 0):
-        return "/n %s attacked %s for %d damage" % (attacker.name, defender.name, damage)
+        return "\n %s attacked %s for %d damage" % (attacker.name, defender.name, damage)
     else:
-        return "/n %s dodged %s's attack" % (defender.name, attacker.name)
+        return "\n %s dodged %s's attack" % (defender.name, attacker.name)
 
 
 

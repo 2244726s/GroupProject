@@ -7,6 +7,8 @@ django.setup()
 from bots.models import *
 from bots import mechanics
 
+print('running basic population script...')
+
 # create some players
 u = User.objects.get_or_create(username='sam', password="")[0]
 u.save()
@@ -29,6 +31,7 @@ r1 = Robot.objects.get_or_create(owner =p1, name='r2d2', type = mechanics.WHEELE
 r1.save()
 r2 = Robot.objects.get_or_create(owner =p2, name='C3P0', type = mechanics.BIPEDAL, value = 10,speed = 5, armour =6, dodge =8, weapon =3,accuracy =5)[0]
 r2.save()
-mechanics.battle(r1,r2)
-r1 = Robot.objects.get_or_create(owner =p3, name='HL2', type = mechanics.AERIAL, value = 10,speed = 20, armour =3, dodge =15, weapon =2,accuracy =5)[0]
-r1.save()
+r3 = Robot.objects.get_or_create(owner =p3, name='HL2', type = mechanics.AERIAL, value = 10,speed = 20, armour =3, dodge =15, weapon =2,accuracy =5)[0]
+r3.save()
+
+print('done.')
