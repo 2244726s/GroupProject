@@ -1,6 +1,11 @@
 """
 contains various functions for game mechanics related computations
 """
+import os
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'GroupProject.settings')
+import django
+django.setup()
+
 from bots.models import Player, Robot, Battle
 import math
 import random

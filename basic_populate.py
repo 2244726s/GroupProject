@@ -1,6 +1,6 @@
 '''very basic population script '''
 import os
-os.environ.setdefault('django_settings_module', 'GroupProject.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'GroupProject.settings')
 import django
 django.setup()
 
