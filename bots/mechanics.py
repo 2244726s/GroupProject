@@ -69,7 +69,6 @@ def battle(robot1, robot2):
     winner.scrap += 40
     loser.scrap += 10
 
-    print(log)
     # create Battle object storing info about the battle
     b = Battle(log = log)
     b.save()
@@ -106,5 +105,4 @@ def attack(attacker,defender):
         else:
             return attacker.weapon
     else:
->>>>>>> 1de700f7ec905a622fb58bdae1504b0379d1ed5b
         return 0
