@@ -74,6 +74,7 @@ def battle(robot1, robot2):
     b.participants.add(winner)
     b.participants.add(loser)
     b.save()
+    return b
 
 
 def updateLog(attacker, defender, damage):

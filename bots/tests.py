@@ -34,4 +34,5 @@ class MechanicsTests(TestCase):
         basic_populate.run()
         r1 = Robot.objects.all()[0]
         r2 = Robot.objects.all()[1]
-        mechanics.battle(r1, r2)
+        b = mechanics.battle(r1, r2)
+        print(b.log)
