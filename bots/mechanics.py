@@ -24,7 +24,8 @@ def battle(robot1, robot2):
     health1 = 8 + (math.ceil(float(robot1.armour) / 2.0))
     health2 = 8 + (math.ceil(float(robot2.armour) / 2.0))
 
-    while(health1 > 0 or health2 > 0):
+    while(health1 > 0 and health2 > 0):
+        log = log + "\n new round %s's health is: %d, %s' health is %d"%(robot1.name,health1,robot2.name,health2)
         if(delay1 < delay2):
             damage = attack(robot1,robot2)
             health2 -= damage
@@ -34,9 +35,9 @@ def battle(robot1, robot2):
             damage = attack(robot2,robot1)
             health1 -= damage
             delay2 += robot2.speed
-            log = log + updateLog(robot1,robot2,damage)
+            log = log + updateLog(robot2,robot1,damage)
 
-        log = log + "\n new round"
+
 
     if(health1 > 0):
         # robot1 won
@@ -68,6 +69,7 @@ def battle(robot1, robot2):
     winner.scrap += 40
     loser.scrap += 10
 
+    print(log)
     # create Battle object storing info about the battle
     b = Battle(log = log)
     b.save()
