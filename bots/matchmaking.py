@@ -15,6 +15,8 @@ def challenge(challenger, challengee, robots):
         robots2 = challenge.robots.all()
         # battle
         battle(robots, robots2)
+        # delete challenge from DB
+        challenge.delete()
     else: # counter challenge doesnt yet exist
         # create challenge
         c = Challenge(challenger = challenger, challengee=challengee)
