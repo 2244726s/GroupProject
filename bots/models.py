@@ -61,3 +61,10 @@ class Battle(models.Model):
         result += ', ' + date
         #result += ', ' + str(self.date)
         return result
+
+class Challenge(models.Model):
+    challenger = models.OneToOneField(Player, related_name = 'challenger')
+    challengee = models.OneToOneField(Player, related_name='challengee')
+    date = models.DateField(auto_now_add = True)
+    # list of robots of challenger
+    robots = models.ManyToManyField(Robot)
