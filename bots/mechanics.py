@@ -10,64 +10,121 @@ AERIAL = 'aerial'
 BIPEDAL = 'bipedal'
 WHEELED = 'wheeled'
 
-def battle(robot1, robot2):
+def battle(robots1, robots2):
     """
     Takes two robots, simulates a battle, and makes adjustments to database accordinngly.
     """
+    log = ""
+    robot1 = robots1[0]
+    robot2 = robots2[0]
+
+    index1 = 0
+    index2 = 0
+
+
+    health1 = 8 + (math.ceil(float(robot1.armour) / 2.0))
+    health2 = 0
 
     # for storing the battle log with details of turn by turn action, which user will view when reviewing this battle
-    log = ""
 
-    delay1 = -1 * robot1.speed
-    delay2 = -1 * robot2.speed
-    # determines who attacks first
-    health1 = 8 + (math.ceil(float(robot1.armour) / 2.0))
-    health2 = 8 + (math.ceil(float(robot2.armour) / 2.0))
 
-    while(health1 > 0 and health2 > 0):
-        log = log + "\n new round %s's health is: %d, %s' health is %d"%(robot1.name,health1,robot2.name,health2)
-        if(delay1 < delay2):
-            damage = attack(robot1,robot2)
-            health2 -= damage
-            delay1 += robot1.speed
-            log = log + updateLog(robot1,robot2,damage)
+    p1win = True
+    winHealth = 8 + (math.ceil(float(robot2.armour) / 2.0))
+
+
+    while(index1 < len(robots1) and index2 < len(robots2)):
+        robot1 = robots1[index1]
+        robot2 = robots2[index2]
+
+        if(p1win):
+            #robot1 won the previous match and therefore keeps the same health
+            health1 = winHealth
+            health2 = 8 + (math.ceil(float(robot2.armour) / 2.0))
+
         else:
-            damage = attack(robot2,robot1)
-            health1 -= damage
-            delay2 += robot2.speed
-            log = log + updateLog(robot2,robot1,damage)
+            #robot2 won the previous match and therefore keeps the same health
+            health2 = winHealth
+            health1 = 8 + (math.ceil(float(robot1.armour) / 2.0))
+
+        delay1 = -1 * robot1.speed
+        delay2 = -1 * robot2.speed
+    # determines who attacks first
+
+        while(health1 > 0 and health2 > 0):
+            if(delay1 < delay2):
+                damage = attack(robot1,robot2)
+                health2 -= damage
+                delay1 += robot1.speed
+                log = log + updateLog(robot1,robot2,damage, health2)
+            else:
+                damage = attack(robot2,robot1)
+                health1 -= damage
+                delay2 += robot2.speed
+                log = log + updateLog(robot2,robot1,damage, health1)
 
 
 
-    if(health1 > 0):
-        # robot1 won
-        winning_robot = robot1
-        losing_robot = robot2
+        if(health1 > 0):
+            # robot1 won
+            p1win = True
+            winHealth = health1
+            log = log + "\n %s has been destroyed!"%(robot2.name)
+            index2 += 1
+            if(index2 < len(robots2)):
+                log = log + ", %s has entered the frey!"%(robots2[index2].name)
+
+        else:
+            # robot2 won
+            p1win = False
+            winHealth = health2
+            log = log + "\n \n %s has been destroyed!"%(robot1.name)
+            index1 += 1
+            if(index1 < len(robots1)):
+                log = log + ", %s has entered the frey! \n"%(robots1[index1].name)
+
+
+    winner_scrap = 0
+    loser_scrap = 0
+    if(index1 >= len(robots1)):
+        #player2 won
+        winner_scrap = math.fsum([i.value for i in robots2])
+        loser_scrap = math.fsum([i.value for i in robots1])
+        winner = robots2[0].owner
+        loser = robots1[0].owner
+
+        for bot in robots2:
+            bot.wins += 1
+
+        for bot in robots1:
+            bot.losses += 1
 
     else:
-        # robot2 won
-        winning_robot = robot2
-        losing_robot = robot1
+        # player1 won
+        winner = robots1[0].owner
+        loser = robots2[0].owner
 
+        winner_scrap = math.fsum([i.value for i in robots1])
+        loser_scrap = math.fsum([ i.value for i in robots2])
 
-    log = log + "\n %s has been Destroyed! %s is Victorious!" % (losing_robot,winning_robot)
+        for bot in robots1:
+            bot.wins += 1
 
+        for bot in robots2:
+            bot.losses += 1
 
-    # update player robot statistics
-    winner = winning_robot.owner
-    loser = losing_robot.owner
-
-    winner .wins += 1
+    reward_scrap = get_scrap(len(robots1),winner_scrap,loser_scrap)
+    log = log + "\n %s wins!"%(str(winner))
+    # debugging purposes only: log = log + "\n \n %s gets %d scrap and %s gets %d scrap"%(str(winner),reward_scrap,str(loser),reward_scrap/5)
+    winner.wins += 1
     loser.losses += 1
 
-    losing_robot.losses+= 1
-    winning_robot.wins += 1
+
 
 
     # awardscrap reward to winner
     # REPLACE WITH ACTUAL AMOUNT AS DETERMINED BY MECHANICS
-    winner.scrap += 40
-    loser.scrap += 10
+    winner.scrap += reward_scrap
+    loser.scrap += reward_scrap / 5
 
     # create Battle object storing info about the battle
     b = Battle(log = log)
@@ -78,11 +135,11 @@ def battle(robot1, robot2):
     return b
 
 
-def updateLog(attacker, defender, damage):
+def updateLog(attacker, defender, damage , health):
     if(damage > 0):
-        return "\n %s attacked %s for %d damage" % (attacker.name, defender.name, damage)
+        return "\n %s attacked %s for %d damage. %s now has %d health left!" % (attacker.name, defender.name, damage, defender.name, 0 if health < 0 else health)
     else:
-        return "\n %s dodged %s's attack" % (defender.name, attacker.name)
+        return "\n %s dodged %s's attack. %s still has %d health!" % (defender.name, attacker.name, defender.name, 0 if health < 0 else health)
 
 
 
@@ -106,3 +163,7 @@ def attack(attacker,defender):
             return attacker.weapon
     else:
         return 0
+
+def get_scrap(num_bots,winner_scrap,loser_scrap):
+
+    return  int(math.ceil(25 * math.log(num_bots + 1,1 + winner_scrap /  loser_scrap)))

@@ -11,7 +11,6 @@ def createPlayer(p_id):
     u.save()
     p = Player(user=u)
     p.save()
-    p_id += 1
     return p
 
 def createRobot(owner, r_id):
@@ -34,16 +33,18 @@ class MechanicsTests(TestCase):
         basic_populate.run()
         r1 = Robot.objects.all()[0]
         r2 = Robot.objects.all()[1]
-        b = mechanics.battle(r1, r2)
+        b = mechanics.battle([r1], [r2])
         print(b.log)
     
     def testIfChallengeMatchesUpForBattle(self):
-        p1 = create_player(0)
-        p2 = create_player(1)
-        for i in range(0,i):
-            r1[i] = create_robot(p1,i)
-        for i in range(i, i+3):
-            r2[i] = create_robot(p2,i)
+        p1 = createPlayer(0)
+        p2 = createPlayer(1)
+        r1=[]
+        for i in range(0,3):
+            r1 += [createRobot(p1,i)]
+        r2=[]
+        for i in range(3, 3+3):
+            r2 += [createRobot(p2,i)]
         
         #count initial number of battles in DB
         n = len(Battle.objects.all())

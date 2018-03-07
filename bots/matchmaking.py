@@ -1,7 +1,29 @@
 """
 methods for finding matches for players
 """
-from models import Player, Robot
+from bots.models import Player, Robot, Challenge 
+from bots.mechanics import battle
+
+def challenge(challenger, challengee, robots):
+    # check if the challengee already issued a challenge to the challenger
+    try:
+        challenge = Challenge.objects.get(challenger=challengee, challengee=challenger)
+    except:
+        challenge = None
+    if(challenge):
+        # get info from the challenge about the other player's robots
+        robots2 = challenge.robots.all()
+        # battle
+        battle(robots, robots2)
+    else: # counter challenge doesnt yet exist
+        # create challenge
+        c = Challenge(challenger = challenger, challengee=challengee)
+        c.save()
+        # add all the robots
+        for r in robots:
+            c.robots.add(r)
+        # save again to commit all changes
+        c.save()
 
 def find_match(player):
 	# list of players looking for match
