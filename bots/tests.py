@@ -5,7 +5,7 @@ import basic_populate
 
 # Create your tests here.
 
-    # helper method 
+    # helper method
 def createPlayer():
     u = User(username='testuser', password="")
     u.save()
@@ -18,21 +18,21 @@ def createRobot(owner):
 
 class ModelTests(TestCase):
     ''' tests for models.py'''
-    
 
-    
+
+
     def testCanCreatePlayer(self):
         p = createPlayer()
 
     def testCanCreateRobot(self):
         p = createPlayer()
         createRobot(p)
-        
+
 class MechanicsTests(TestCase):
     def testBattleFuncRuns(self):
-# populate database    
+# populate database
         basic_populate.run()
         r1 = Robot.objects.all()[0]
         r2 = Robot.objects.all()[1]
-        b = mechanics.battle(r1, r2)
+        b = mechanics.battle([r1], [r2])
         print(b.log)
