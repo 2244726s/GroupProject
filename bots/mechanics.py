@@ -83,9 +83,12 @@ def battle(robots1, robots2):
                 log = log + ", %s has entered the frey! \n"%(robots1[index1].name)
 
 
-
+    winner_scrap = 0
+    loser_scrap = 0
     if(index1 >= len(robots1)):
         #player2 won
+        winner_scrap = math.fsum([i.value for i in robots2])
+        loser_scrap = math.fsum([i.value for i in robots1])
         winner = robots2[0].owner
         loser = robots1[0].owner
 
@@ -100,12 +103,18 @@ def battle(robots1, robots2):
         winner = robots1[0].owner
         loser = robots2[0].owner
 
+        winner_scrap = math.fsum([i.value for i in robots1])
+        loser_scrap = math.fsum([ i.value for i in robots2])
+
         for bot in robots1:
             bot.wins += 1
 
         for bot in robots2:
             bot.losses += 1
+
+    reward_scrap = get_scrap(len(robots1),winner_scrap,loser_scrap)
     log = log + "\n %s wins!"%(str(winner))
+    # debugging purposes only: log = log + "\n \n %s gets %d scrap and %s gets %d scrap"%(str(winner),reward_scrap,str(loser),reward_scrap/5)
     winner.wins += 1
     loser.losses += 1
 
@@ -114,8 +123,8 @@ def battle(robots1, robots2):
 
     # awardscrap reward to winner
     # REPLACE WITH ACTUAL AMOUNT AS DETERMINED BY MECHANICS
-    winner.scrap += 40
-    loser.scrap += 10
+    winner.scrap += reward_scrap
+    loser.scrap += reward_scrap / 5
 
     # create Battle object storing info about the battle
     b = Battle(log = log)
@@ -155,3 +164,6 @@ def attack(attacker,defender):
     else:
         return 0
 
+def get_scrap(num_bots,winner_scrap,loser_scrap):
+
+    return  int(math.ceil(25 * math.log(num_bots + 1,1 + winner_scrap /  loser_scrap)))
