@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+{% extends 'bots/base.html' %}
+{% load bots_template_tags %}
+
+{%block title_block %}
+	{{player.user.username}}'s profile
+{%endblock%}
+
+
+{%block content_block %}
+
+	<!--START PROFILE SIDEBAR-->
+	<div id="sidebar">
+
+		<img src="#profilephoto" alt="{{player.user.username}}'s profile photo">
+
+		<h3> {{player.user.username}} </h3>
+		Player information:
+		Owns {{number_of_robots}} robots <br>
+		Has won {{player.wins}} battles <br>
+		Playing since {{ player.user.date_joined }} <br>
+
+	</div>
+	<!--END PROFILE SIDEBAR-->
+
+	<div id="center-box">
+
+	<div id="friends">
+	<!--START TOP 5 FOLLOWEES-->
+	<h3>Friends leaderboard<h3>
+	{% if top5_winning_followees %}
+	<ul>
+		{% for player in top5_winning_followees %}
+	<li>
+		<a href="{{ player.user.url }}">{{ player.user.username }}</a>
+	</li>
+		{% endfor %}	
+	</ul>
+		<a href="#following"> See all users you follow </a>
+		{% else %}
+		<strong>You are currently not following anyone</strong>
+		{% endif %}
+	<!--END TOP 5 FOLLOWEES-->	
+	</div>
+
+	<div id="robots"> <!--requires styling to switch between two orderings-->
+
+		<!--START TOP 5 VALUABLE ROBOTS-->
+		<h3>Your top 5 most valuable robots<h3>
+
+		{% if top5_valuable_robots %}
+			<ul>
+				{% for robot in top5_valuable_robots %}
+					<li>
+						<a href="{{robot.url}}">{{ robot.name }}</a> <!--require proper link-->
+					</li>
+				{% endfor %}
+			</ul>
+			<a href="#robots"> See all robots </a>
+		{% else %}
+			<strong>You currently have no robots.</strong>
+		{% endif %}
+		</div>
+		<!--END TOP 5 VALUABLE ROBOTS-->
+
+		<!--START TOP 5 WINNING ROBOTS-->
+		<h3>Your top 5 winning robots<h3>
+
+		{% if top5_winning_robots %}
+			<ul>
+				<!--start loop-->
+				{% for robot in top5_winning_robots %}
+					<li>
+						<a href="{{robot.url}}">{{ robot.name }}</a> <!--require proper link-->
+					</li>
+				{% endfor %}
+				<!--end loop-->				
+			</ul>
+				<a href="#robots"> See all robots </a>
+		{% else %}
+			<!--no robots found-->
+			<strong>You currently have no robots.</strong>
+		{% endif %}
+		<!--END TOP 5 WINNING ROBOTS-->
+	</div>
+
+{%endblock%}
+
+
