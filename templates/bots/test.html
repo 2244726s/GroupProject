@@ -1,16 +1,18 @@
 <!DOCTYPE html>
+{% load bots_template_tags %}
+{% load staticfiles %}
 <html>
 <head>
-<title>Rango</title>
+<title>ScrapBots test</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<script src="{% static 'js/bots/profile-page.js' %}"></script>
 </head>
 <body>
-<h1>Rango says...</h1>
-<div>
-hey there partner! <br />
-<strong>{{ boldmessage }}</strong><br />
-</div>
-<div>
-<a href="/rango/about/">About</a><br />
-</div>
+	<h2>Robots</h2>	
+	<div id="bot-table">
+		{% get_bot_table bot %}	
+	</div>
 </body>
 </html>
+
+

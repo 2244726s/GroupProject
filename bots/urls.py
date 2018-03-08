@@ -3,4 +3,5 @@ from bots import views
 
 urlpatterns = [
     url(r'^profile/(?P<profile_name>[\w\-]+)/$', views.show_profile, name ='show_profile'),
+    url(r'^upgrade/$', views.upgrade, name='upgrade'),
 ]

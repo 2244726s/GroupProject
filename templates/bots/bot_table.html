@@ -1,0 +1,29 @@
+{% load bots_template_tags %}
+<table>
+	<tr>
+		<th colspan="2">{{robot.name }}</th>
+	</tr>
+	<tr>
+		<td>Type</td>
+		<td>{{ robot.type }}</td
+	</tr>
+	<tr>
+		<td>Wins</td>
+		<td>{{ robot.wins }}</td
+	</tr>
+	<tr>
+		<td>Losses</td>
+		<td>{{ robot.losses }}</td
+	</tr>
+	{% for stat, value in stats.items %}
+		<tr>
+			<td>{{ stat }}</td>
+			<td>{{ value }}
+			{% if player.scrap|add:0 >= value|mult:25 %}
+				<button class="stat-increase" data-stat="{{ stat }}" data-botid="{{robot.id}}" />
+			{% endif %}
+			</td>
+		</tr>
+	{% endfor %}
+
+</table>
