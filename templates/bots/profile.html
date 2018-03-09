@@ -3,7 +3,7 @@
 {% load bots_template_tags %}
 
 {%block title_block %}
-	{{player.user.username}}'s profile
+	{{player}}'s profile
 {%endblock%}
 
 
@@ -11,8 +11,8 @@
 
 	<!--START PROFILE SIDEBAR-->
 	<div id="section">
-		<h3> {{player.user.username}} </h3>
-		Player information:
+		<h3> {{player}} </h3>
+		Player information: <br>
 		Owns {{number_of_robots}} robots <br>
 		Has won {{player.wins}} battles <br>
 		Playing since {{ player.user.date_joined }} <br>

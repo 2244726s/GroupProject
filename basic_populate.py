@@ -16,7 +16,7 @@ def run():
     p1 = Player.objects.get_or_create(user=u)[0]
     p1.save()
 
-    u = User.objects.get_or_create(username='hannah', password="")[0]
+    u = User.objects.get_or_create(username='hannah', password="1234")[0]
     u.save()
     p2 = Player.objects.get_or_create(user=u)[0]
     p2.save()

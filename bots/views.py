@@ -31,7 +31,7 @@ def show_profile(request, profile_name):
             
     except: # player not found
         context = {'player': None}
-    
+
     return render(request, 'bots/profile.html', context)
 
 def upgrade(request):
