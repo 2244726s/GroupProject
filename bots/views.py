@@ -68,4 +68,18 @@ def upgrade(request):
             'stats' : bot.get_stats(),
             'player' : bot.owner,})
         return response
+
+def leaderboards(request):
+    return render(request, 'bots/test.html')
+
+def about(request):
+    return render(request, 'bots/test.html')
+
+def signin(request):
+    return render(request, 'bots/test.html')
+
+def signup(request):
+    return render(request, 'bots/test.html')
+
+
     
