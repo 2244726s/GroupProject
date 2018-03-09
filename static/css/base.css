@@ -1,0 +1,45 @@
+#nav-bar {
+	background-color: #4f4f96;
+	text-align:center;
+	margin:auto;
+	width:70%;
+	padding:10px;
+	border-radius: 10px;
+}
+
+#content{	
+	border-style:dotted;
+	border-color: dark blue;
+	border-radius: 10px;
+	margin:auto;
+	width:70%;
+	padding:10px;
+	
+}
+
+#logo {
+	font-family:reckoner;
+	font-size:50px;
+	font-weight:bold;
+	float:left
+}
+
+a {
+	color:white;
+	padding-right:20px
+}
+
+a:link { 
+	text-decoration:none;
+}
+
+a:hover{
+	
+	color:white;
+	text-shadow: 1px 1px 2px lightblue, 0 0 25px lightblue, 0 0 5px lightblue;	
+}
+
+@font-face{
+	font-family:reckoner;
+	src: url('../fonts/reckoner.ttf');
+}
