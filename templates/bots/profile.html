@@ -10,22 +10,18 @@
 {%block content_block %}
 
 	<!--START PROFILE SIDEBAR-->
-	<div id="sidebar">
-
+	<div id="section">
 		<h3> {{player.user.username}} </h3>
 		Player information:
 		Owns {{number_of_robots}} robots <br>
 		Has won {{player.wins}} battles <br>
 		Playing since {{ player.user.date_joined }} <br>
-
 	</div>
 	<!--END PROFILE SIDEBAR-->
 
-	<div id="center-box">
-
-	<div id="friends">
+	<div id="section">
 	<!--START TOP 5 FOLLOWEES-->
-	<h3>Friends leaderboard<h3>
+	<h3>Friends leaderboard</h3>
 	{% if top5_winning_followees %}
 	<ul>
 		{% for player in top5_winning_followees %}
@@ -36,15 +32,15 @@
 	</ul>
 		See all users you follow <br>
 		{% else %}
-		<strong>You are currently not following anyone</strong>
+		No followees found
 		{% endif %}
 	<!--END TOP 5 FOLLOWEES-->	
 	</div>
 
-	<div id="robots"> <!--requires styling to switch between two orderings-->
+	<div id="section"> <!--requires styling to switch between two orderings-->
 
 		<!--START TOP 5 VALUABLE ROBOTS-->
-		<h3>Your top 5 most valuable robots<h3>
+		<h3>Your top 5 most valuable robots</h3>
 
 		{% if top5_valuable_robots %}
 			<ul>
@@ -57,13 +53,12 @@
 			</ul>
 			 See all robots <br>
 		{% else %}
-			<strong>You currently have no robots.</strong>
+			No robots found
 		{% endif %}
-		</div>
 		<!--END TOP 5 VALUABLE ROBOTS-->
 
 		<!--START TOP 5 WINNING ROBOTS-->
-		<h3>Your top 5 winning robots<h3>
+		<h3>Your top 5 winning robots</h3>
 
 		{% if top5_winning_robots %}
 			<ul>
@@ -79,10 +74,10 @@
 				 See all robots <br>
 		{% else %}
 			<!--no robots found-->
-			<strong>You currently have no robots.</strong>
+			No robots found
 		{% endif %}
 		<!--END TOP 5 WINNING ROBOTS-->
-	</div>
+		</div>
 
 {%endblock%}
 
