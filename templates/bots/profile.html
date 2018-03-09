@@ -3,12 +3,12 @@
 {% load bots_template_tags %}
 
 {%block title_block %}
-	{{player}}'s profile
+	{{player.user.username}}'s profile
 {%endblock%}
 
 
 {%block content_block %}
-
+{% if player %}
 	<!--START PROFILE SIDEBAR-->
 	<div id="section">
 		<h3> {{player}} </h3>
@@ -78,6 +78,9 @@
 		{% endif %}
 		<!--END TOP 5 WINNING ROBOTS-->
 		</div>
+	{% else %}
+		Player doesn't exist.
+	{% endif %}
 
 {%endblock%}
 
