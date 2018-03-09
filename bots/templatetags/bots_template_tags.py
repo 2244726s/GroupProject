@@ -14,3 +14,11 @@ def get_bot_table(robot):
 @register.filter(name='mult')
 def mult(value, arg):
     return int(value) * int(arg)
+
+@register.inclusion_tag('bots/partials/bot_stat_td.html')
+def get_bot_stat(robot, stat):
+    return {
+        'robot' : robot,
+        'value' : robot.get_stats()[stat],
+        'stat' : stat,
+    }

@@ -77,6 +77,37 @@
 			No robots found
 		{% endif %}
 		<!--END TOP 5 WINNING ROBOTS-->
+		<!-- area where user can expand area to see table of all the player's robots -->
+		<!-- right now doesnt account for user authentication -->
+		
+		<h2>Robots</h2>
+		<button id="hide-show-robots-btn" value="show" type="button" >show</button>
+
+		<table id="all-robots-table hidden="false">
+			<tr>
+				<th>Name</th>
+				<th>Type</th>
+				<th>Value</th>
+				<th>Wins/Losses</th>
+				{% for key in stats %}
+					<th>{{ key }}</th>
+				{% endfor %}
+			</tr>
+			{% for robot in robots %}
+				<tr id="bot-row-{{ robot.id }}">
+								<td>{{ robot.name }}</td>
+					<td>{{ robot.type }}</td>
+					<td>{{ robot.value }}</td>
+					<td>{{ robot.wins }}/{{ robot.losses }}</td>
+					{% for stat in stats %}
+					<td id="{{ robot.id }}-{{ stat }}-td">
+						{% get_bot_stat robot stat%}
+					</td>
+					{% endfor %}
+				</tr >
+			{% endfor %}
+		</table>
+
 		</div>
 	{% else %}
 		Player doesn't exist.
@@ -85,3 +116,4 @@
 {%endblock%}
 
 
+	

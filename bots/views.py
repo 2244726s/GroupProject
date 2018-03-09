@@ -27,6 +27,10 @@ def show_profile(request, profile_name):
             'top5_valuable_robots' : Robot.objects.filter(owner=player).order_by('-value')[:5],
             # top5 robots with the most wins
             'top5_winning_robots' : Robot.objects.filter(owner=player).order_by('-wins')[:5],
+            # list of player's robots
+            'robots' : Robot.objects.filter(owner=player),
+            # list of stat names
+            'stats' : ['speed', 'dodge', 'armour', 'weapon', 'accuracy'],
         }
             
     return render(request, 'bots/profile.html', context)
