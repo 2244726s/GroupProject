@@ -1,0 +1,29 @@
+{% extends 'bots/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+Sign Up
+{% endblock %}
+
+{% block body_block %}
+	<h1>Register for Rango</h1>
+	
+	{% if registered %}
+		Rango says: <strong>Thank you for registering!</strong>
+		<a href="{% url 'index' %}">Return to the homepage.</a><br />
+		{% else %}
+			Rango says: <strong>register here!</strong><br />
+			<form id="user_form" method="post" action="{% url 'bots:signup' %}"
+			enctype="multipart/form-data">
+
+			{% csrf_token %}
+
+			<!-- Display each form -->
+			{{ user_form.as_p }}
+
+			<!-- Provide a button to click to submit the form. -->
+			<input type="submit" name="submit" value="Register" />
+			</form>
+	{% endif %}
+{% endblock %}
+

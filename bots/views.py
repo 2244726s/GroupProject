@@ -1,10 +1,11 @@
 from django.shortcuts import render
 from bots.models import *
+from bots.forms import *
 # Create your views here.
 
 def index(request):
     context =  {'bot' : Robot.objects.all()[0]}
-    return render(request, 'bots/test.html', context)
+    return render(request, 'bots/index.html', context)
 
 def show_profile(request, profile_name):
     # try to retrieve info about player
@@ -70,16 +71,43 @@ def upgrade(request):
         return response
 
 def leaderboards(request):
-    return render(request, 'bots/test.html')
+    return render(request, 'bots/leaderboards.html')
 
 def about(request):
-    return render(request, 'bots/test.html')
+    return render(request, 'bots/about.html')
 
 def signin(request):
-    return render(request, 'bots/test.html')
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(username=username, password=password)
+        if user:
+            if user.is_active:
+                login(request, user)
+                return HttpResponseRedirect(reverse('index'))
+            else:
+                return HttpResponse("Your Rango account is disabled.")
+        else:
+            print("Invalid login details: {0}, {1}".format(username, password))
+            return HttpResponse("Invalid login details supplied.")
+    else:
+        return render(request, 'bots/signin.html', {})
+    return render(request, 'bots/signin.html')
+
 
 def signup(request):
-    return render(request, 'bots/test.html')
+    registered = False
+    if request.method == 'POST':
+        user_form = UserForm(data=request.POST)
+        if user_form.is_valid():
+            user = user_form.save()
+            user.set_password(user.password)
+            user.save()
+        else:
+            print(user_form.errors)
+    else:
+        user_form = UserForm()
+    return render(request,'bots/signup.html',{'user_form': user_form,'registered': registered})
 
 
     

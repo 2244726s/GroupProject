@@ -1,6 +1,5 @@
 <!DOCTYPE HTML>
 {% load bots_template_tags %}
-{% extends 'bots/base.html' %}
 
 <html>
 		<head lang="en">
@@ -19,28 +18,31 @@
 		<!-- Navigation Bar-->
 		<div id="nav-bar">
 			
-			<a href="#home"> HOME </a>
+			<a href="{% url 'index' %}"> HOME </a>
 			<a href="{% url 'bots:leaderboards' %}"> LEADERBOARDS </a>
 			<a href="{% url 'bots:about' %}"> ABOUT </a>			
 			
-			{% if user.is_authenticated}
+			{% if user.is_authenticated %}
 			<a href="{% url 'bots:show_profile' player.user.username%}"> MyProfile </a>
-			{%else%}
+			{% else %}
 			
 			<!--will make a dropdown button for play and when hovered will display the menu-->
 			<div id=play>
 				<!--menu-->
-				<a href="{% url 'bots:Signin' %}"> Sign in </a>
-				<a href="{% url 'bots:Signup' %}"> Sign Up </a>
+				<a href="{% url 'bots:signin' %}"> Sign in </a>
+				<a href="{% url 'bots:signup' %}"> Sign Up </a>
 			</div>
+			{% endif %}
 		</div>
 		<!--END NAVIGATION BAR-->
 				
 		<!-- PAGE CONTENT-->
 		<div id="content">		
-			{ % block content_block %}
+			{% block content_block %}
+			
+			SCRAPBOTS
 					
-			{%endblock%}		
+			{% endblock %}		
 		</div>
 		<!-- END CONTENT -->	
 	</body>			
