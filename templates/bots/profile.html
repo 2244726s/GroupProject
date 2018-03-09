@@ -30,11 +30,11 @@
 	<ul>
 		{% for player in top5_winning_followees %}
 	<li>
-		<a href="{{ player.user.url }}">{{ player.user.username }}</a>
+		<a href="{% url 'bots:show_profile' player.user.username %}">{{ player.user.username }}</a>
 	</li>
 		{% endfor %}	
 	</ul>
-		<a href="#following"> See all users you follow </a>
+		See all users you follow <br>
 		{% else %}
 		<strong>You are currently not following anyone</strong>
 		{% endif %}
@@ -50,11 +50,12 @@
 			<ul>
 				{% for robot in top5_valuable_robots %}
 					<li>
-						<a href="{{robot.url}}">{{ robot.name }}</a> <!--require proper link-->
+						name: {{ robot.name }} <br>
+						type: {{robot.type}} <br>				
 					</li>
 				{% endfor %}
 			</ul>
-			<a href="#robots"> See all robots </a>
+			 See all robots <br>
 		{% else %}
 			<strong>You currently have no robots.</strong>
 		{% endif %}
@@ -69,12 +70,13 @@
 				<!--start loop-->
 				{% for robot in top5_winning_robots %}
 					<li>
-						<a href="{{robot.url}}">{{ robot.name }}</a> <!--require proper link-->
+						name: {{ robot.name }}<br>
+						type: {{robot.type}} <br>						
 					</li>
 				{% endfor %}
 				<!--end loop-->				
 			</ul>
-				<a href="#robots"> See all robots </a>
+				 See all robots <br>
 		{% else %}
 			<!--no robots found-->
 			<strong>You currently have no robots.</strong>
