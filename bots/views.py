@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from django.contrib.auth import authenticate, login
+from django.http import HttpResponseRedirect, HttpResponse
 from bots.models import *
 from bots.forms import *
 # Create your views here.
