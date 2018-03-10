@@ -66,7 +66,7 @@ class Battle(models.Model):
 class Team(models.Model):
     player = models.ForeignKey(Player)
     bots = models.ManyToManyField(Robot)
-    no_bots = models.IntegerField(default = 1)
+    num_bots = models.IntegerField(default = 1)
 
 
 class Challenge(models.Model):
