@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
 # Create your models here.
 class Player(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -41,7 +42,7 @@ class Robot(models.Model):
             'accuracy' : self.accuracy,
         }
         return stats
-    
+
     def __str__(self):
         return self.name
 
@@ -57,14 +58,21 @@ class Battle(models.Model):
             else:
                 result += ' vs ' + str(p)
         #end for
-        date = self.date.strftime('%d/%m %H:%M')        
+        date = self.date.strftime('%d/%m %H:%M')
         result += ', ' + date
         #result += ', ' + str(self.date)
         return result
 
+class Team(models.Model):
+    player = models.ForeignKey(Player)
+    bots = models.ManyToManyField(Robot)
+    no_bots = models.IntegerField(default = 1)
+
+
 class Challenge(models.Model):
-    challenger = models.OneToOneField(Player, related_name = 'challenger')
-    challengee = models.OneToOneField(Player, related_name='challengee')
+    challenger = models.OneToOneField(Team, related_name = 'challenger')
+    challengee = models.OneToOneField(Team, related_name='challengee')
     date = models.DateField(auto_now_add = True)
-    # list of robots of challenger
-    robots = models.ManyToManyField(Robot)
+
+
+
