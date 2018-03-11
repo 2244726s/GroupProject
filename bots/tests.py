@@ -5,7 +5,7 @@ import basic_populate
 
 # Create your tests here.
 
-    # helper method 
+    # helper method
 def createPlayer(p_id):
     u = User(username='testuser'+str(p_id), password="")
     u.save()
@@ -26,16 +26,16 @@ class ModelTests(TestCase):
     def testCanCreateRobot(self):
         p = createPlayer(0)
         createRobot(p,0)
-        
+
 class MechanicsTests(TestCase):
     def testBattleFuncRuns(self):
-# populate database    
+# populate database
         basic_populate.run()
         r1 = Robot.objects.all()[0]
         r2 = Robot.objects.all()[1]
         b = mechanics.battle([r1], [r2])
         print(b.log)
-    
+
     def testIfChallengeMatchesUpForBattle(self):
         p1 = createPlayer(0)
         p2 = createPlayer(1)
@@ -45,15 +45,17 @@ class MechanicsTests(TestCase):
         r2=[]
         for i in range(3, 3+3):
             r2 += [createRobot(p2,i)]
-        
+
         #count initial number of battles in DB
         n = len(Battle.objects.all())
         # issue initial challenge
-        matchmaking.challenge(p1,p2,r1)
+        matchmaking.matchmake(p1,r1)
+        matchmaking.matchmake(p2,r2)
         # there shouldnt be any more battles yet
         self.assertEquals(len(Battle.objects.all()), n)
-        
+
         #issue counter challenge
-        matchmaking.challenge(p2, p1, r2)
+        matchmaking.challenge(p1,p2,r1)
+        matchmaking.challenge(p2,p1,r2)
         # now there should be a new battle in db
         self.assertEquals(len(Battle.objects.all()), n+1)

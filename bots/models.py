@@ -72,6 +72,7 @@ class Team(models.Model):
 class Challenge(models.Model):
     challenger = models.OneToOneField(Team, related_name = 'challenger')
     challengee = models.OneToOneField(Team, related_name='challengee')
+    num_bots = models.IntegerField(default = 1)
     date = models.DateField(auto_now_add = True)
 
 
