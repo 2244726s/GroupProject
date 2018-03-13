@@ -8,6 +8,19 @@
 	border-radius: 10px;
 }
 
+#profile-section{
+	width:30%;
+	background-color: #ededed;
+	max-width:30%;	
+	height:400px;
+	display: inline-block;
+	float:center;
+	border-style:dotted;
+	border-color:black;
+	text-align:center;
+}
+
+
 #section{
 	width:30%;
 	background-color: #ededed;
@@ -17,6 +30,7 @@
 	float:center;
 	border-style:dotted;
 	border-color:black;
+	text-align:center;
 }
 
 
@@ -34,22 +48,22 @@
 	font-family:Impact;
 	font-size:40px;
 	font-weight:bold;
-	float:left
+	float:left;
+	color:white;
 }
 
 #nav-link {
-	margin-top:5px;
 	color:white;
-	padding-right:20px;
+	padding:10px;
 	font-family: helvetica;
+	display:inline-block;
 }
 
-#nav-link:link { 
+#nav-link:link, #dropdown-link:link { 
 	text-decoration:none;
 }
 
-#nav-link:hover{
-	
+#nav-link:hover, #logo:hover, #dropdown-link:hover{	
 	color:white;
 	text-shadow: 1px 1px 2px lightblue, 0 0 25px lightblue, 0 0 5px lightblue;	
 }
@@ -75,6 +89,7 @@
 	min-height:10%;
 	box-shadow: 2px 2px 1px #aaaaaa;
 	padding:10px;
+	text-align:center;
 }
 
 #dropdown-link{
@@ -83,17 +98,44 @@
 	color: #4f4f96;
 }
 
-#dropdown-link:link{
-	text-decoration:none;
-}
-
-#dropdown-link:hover{	
-	color:white;
-	text-shadow: 1px 1px 2px white, 0 0 25px white, 0 0 5px white;	
-}
-
-
 #dropdown{
 float:right;
 }
+
+
+#username{
+	color: #6ca1cc;
+	font-family:helvetica;
+	font-size: 30px;
+	
+}
+
+#profile-header{
+	color: #6ca1cc;
+	font-family:helvetica;
+	font-size: 20px;
+	
+}
+
+#profile-sub-header{
+	
+	color: black;
+	font-family:helvetica;
+	font-size: 15px;
+	
+}
+
+#value, #wins {
+	
+	background-color:#6ca1cc;
+	border: none;
+	color:white;
+}
+
+#value:active, #wins:active {
+	background-color: #4f4f96;
+}
+
+
+
 
