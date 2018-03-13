@@ -21,7 +21,7 @@ def show_profile(request, profile_name):
             'player': player,
             # number of robots the player owns
             'number_of_robots' : len(Robot.objects.filter(owner = player)),
-            # players this player is following 
+            # players this player is following
             'followees' : player.follows.all(),
             # the 5 most valuable robots the player owns
             'top5_valuable_robots' : Robot.objects.filter(owner=player).order_by('-value')[:5],
@@ -32,7 +32,7 @@ def show_profile(request, profile_name):
             # list of stat names
             'stats' : ['speed', 'dodge', 'armour', 'weapon', 'accuracy'],
         }
-            
+
     return render(request, 'bots/profile.html', context)
 
 def upgrade(request):
@@ -40,14 +40,14 @@ def upgrade(request):
     if request.method == 'GET':
         stat = request.GET['stat']
         bot_id = int(request.GET['bot_id'])
-    
+
         #try to  find robot with given id
         try:
             bot = Robot.objects.get(id=bot_id)
         except: # invalid robot id
-            print('upgrade was called with invalid robot id!!!')    
+            print('upgrade was called with invalid robot id!!!')
             # assume player has enough scrap, since otherwise they wouldnt have access to button that calls this
-        
+
         if(stat == 'speed'):
             bot.owner.scrap -= bot.speed*25
             bot.speed += 1
@@ -64,7 +64,7 @@ def upgrade(request):
             bot.owner.scrap -= bot.accuracy*25
             bot.accuracy+= 1
 
-        bot.save() 
+        bot.save()
         bot.owner.save()
         # returned new rendered table
         response =  render(request, 'bots/bot_table.html', {
@@ -72,6 +72,26 @@ def upgrade(request):
             'stats' : bot.get_stats(),
             'player' : bot.owner,})
         return response
+
+
+def display_bot(request):
+
+    if request.method == "GET":
+        bot_id = request.GET.get(request,0)
+
+
+        try:
+            bot = robot.objects.get(id = bot_id)
+
+            response =  render(request, 'bots/bot_table.html', {
+            'robot' : bot,
+            'stats' : bot.get_stats(),
+            'player' : bot.owner,})
+            return response
+        except:
+            return render(request,'bots/bot_table.html',{})
+
+
 
 def leaderboards(request):
     return render(request, 'bots/leaderboards.html')
@@ -113,4 +133,4 @@ def signup(request):
     return render(request,'bots/signup.html',{'user_form': user_form,'registered': registered})
 
 
-    
+

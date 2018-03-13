@@ -6,7 +6,6 @@
 	{{player.user.username}}'s profile
 {%endblock%}
 
-
 {%block content_block %}
 {% if player %}
 	<!--START PROFILE SIDEBAR-->
@@ -28,13 +27,13 @@
 	<li>
 		<a href="{% url 'bots:show_profile' player.user.username %}">{{ player.user.username }}</a>
 	</li>
-		{% endfor %}	
+		{% endfor %}
 	</ul>
 		See all users you follow <br>
 		{% else %}
 		No followees found
 		{% endif %}
-	<!--END TOP 5 FOLLOWEES-->	
+	<!--END TOP 5 FOLLOWEES-->
 	</div>
 
 	<div id="section"> <!--requires styling to switch between two orderings-->
@@ -47,7 +46,7 @@
 				{% for robot in top5_valuable_robots %}
 					<li>
 						name: {{ robot.name }} <br>
-						type: {{robot.type}} <br>				
+						type: {{robot.type}} <br>
 					</li>
 				{% endfor %}
 			</ul>
@@ -66,10 +65,10 @@
 				{% for robot in top5_winning_robots %}
 					<li>
 						name: {{ robot.name }}<br>
-						type: {{robot.type}} <br>						
+						type: {{robot.type}} <br>
 					</li>
 				{% endfor %}
-				<!--end loop-->				
+				<!--end loop-->
 			</ul>
 				 See all robots <br>
 		{% else %}
@@ -79,34 +78,18 @@
 		<!--END TOP 5 WINNING ROBOTS-->
 		<!-- area where user can expand area to see table of all the player's robots -->
 		<!-- right now doesnt account for user authentication -->
-		
-		<h2>Robots</h2>
-		<button id="hide-show-robots-btn" value="show" type="button" >show</button>
 
-		<table id="all-robots-table hidden="false">
-			<tr>
-				<th>Name</th>
-				<th>Type</th>
-				<th>Value</th>
-				<th>Wins/Losses</th>
-				{% for key in stats %}
-					<th>{{ key }}</th>
-				{% endfor %}
-			</tr>
-			{% for robot in robots %}
-				<tr id="bot-row-{{ robot.id }}">
-								<td>{{ robot.name }}</td>
-					<td>{{ robot.type }}</td>
-					<td>{{ robot.value }}</td>
-					<td>{{ robot.wins }}/{{ robot.losses }}</td>
-					{% for stat in stats %}
-					<td id="{{ robot.id }}-{{ stat }}-td">
-						{% get_bot_stat robot stat%}
-					</td>
-					{% endfor %}
-				</tr >
-			{% endfor %}
-		</table>
+		<h2>Robots</h2>
+	<select class = 'select_bot'>
+        {% for bot in robots %}
+
+        <option value = "{{ bot.id }}">{{ bot.name }}</option>
+
+        {% endfor %}
+
+
+    </select>
+    <div id = 'bot_table'></div>
 
 		</div>
 	{% else %}
@@ -116,4 +99,3 @@
 {%endblock%}
 
 
-	

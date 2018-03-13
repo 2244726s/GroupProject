@@ -10,5 +10,6 @@ urlpatterns = [
     url(r'^signin/$', views.signin, name='signin'),
     url(r'^signup/$', views.signup, name='signup'),
     url(r'^about/$', views.about, name='about'),
+    url(r'^get_bot/$', views.display_bot, name='display_bot'),
 ]
 
