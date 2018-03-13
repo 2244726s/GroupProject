@@ -12,101 +12,108 @@
 	<!--START PROFILE SIDEBAR-->
 	<div id="profile-section">
 		<h3 id="username"> {{player}} </h3>
-		<h4 id="profile-sub-header"> Player information:  </h4> <br>
+		<h4 id="profile-sub-header"> Player information:</h4> <br>
 		<b>Number of Robots:</b> {{number_of_robots}} <br>
-		<b>Battles Won:</b> {{player.wins}} <br><br>
+		<b>Battles Won:</b> {{player.wins}} <br><br><hr>
 		<b>Playing since:</b> <br>
 		{{ player.user.date_joined }} <br>
 	</div>
 	<!--END PROFILE SIDEBAR-->
 
 	<div id="profile-section">
-	<!--START TOP 5 FOLLOWEES-->
-	<h3 id="profile-header">Friends leaderboard</h3>
-	{% if top5_winning_followees %}
-	<ul>
-		{% for player in top5_winning_followees %}
-	<li>
-		<a href="{% url 'bots:show_profile' player.user.username %}">{{ player.user.username }}</a>
-	</li>
-		{% endfor %}	
-	</ul>
-		See all users you follow <br>
+		
+		<!--START TOP 5 FOLLOWEES-->
+		<h3 id="profile-header">Friends leaderboard</h3>
+		{% if top5_winning_followees %}
+			<ul>
+					{% for player in top5_winning_followees %}
+				<li>
+					<a href="{% url 'bots:show_profile' player.user.username %}">{{ player.user.username }}</a>
+				</li>
+					{% endfor %}	
+			</ul>
+			See all users you follow <br>
 		{% else %}
-		No followees found
+			No followees found
 		{% endif %}
-	<!--END TOP 5 FOLLOWEES-->	
+		
 	</div>
+		<!--END TOP 5 FOLLOWEES-->	
 
-	<div id="profile-section"> <!--requires styling to switch between two orderings-->
-	
-	<h3 id="profile-header"> Your Best Robots </h3>
-		Sort by:
-		<button id="value">value</button>
-		<button id="wins">wins</button>
-		
-		
-		<div id="bots-value">
-		<!--START TOP 5 VALUABLE ROBOTS-->
-		<h4 id="profile-sub-header">Your top 5 most valuable robots</h4>
+	<!--START ROBOTS SECTION-->
+	<div id="profile-section">
+		<h3 id="profile-header"> Your Best Robots </h3>
+			Sort by:
+			<button id="value">value</button>
+			<button id="wins">wins</button>
+					
+			<div id="bots-value">
+			<!--START TOP 5 VALUABLE ROBOTS-->
+				<h4 id="profile-sub-header">Your top 5 most valuable robots</h4>
 
-		{% if top5_valuable_robots %}
-			<ul>
-				{% for robot in top5_valuable_robots %}
-					<li>
-						name: {{ robot.name }} <br>
-						type: {{robot.type}} <br>				
-					</li>
+				{% if top5_valuable_robots %}
+					<ul>
+						{% for robot in top5_valuable_robots %}
+							<li>
+								name: {{ robot.name }} <br>
+								type: {{robot.type}} <br>				
+							</li>
+						{% endfor %}
+					</ul>
+				{% else %}
+					No robots found
+				{% endif %}
+				<!--END TOP 5 VALUABLE ROBOTS-->
+			</div>
+			
+			<div id="bots-wins">
+
+			<!--START TOP 5 WINNING ROBOTS-->
+			<h4 id="profile-sub-header">Your top 5 winning robots</h4>
+
+			{% if top5_winning_robots %}
+				<ul>
+					<!--start loop-->
+					{% for robot in top5_winning_robots %}
+						<li>
+							name: {{ robot.name }}<br>
+							type: {{robot.type}} <br>						
+						</li>
+					{% endfor %}
+					<!--end loop-->				
+				</ul>
+			{% else %}
+				<!--no robots found-->
+				No robots found
+			{% endif %}
+			
+			<!--END TOP 5 WINNING ROBOTS-->
+			</div>
+			
+			<!-- area where user can expand area to see table of all the player's robots -->
+			<!-- right now doesnt account for user authentication -->
+
+			<hr>
+			<h3 id="profile-header">All Robots</h3>
+			
+			View and upgrade all your robots here. <br>
+			Select a robot: 
+			
+			<!-- START ROBOT SELECTION BOX -->
+			<select id = 'select_bot' class = 'select_bot'>
+				{% for bot in robots %}
+				<option value = "{{ bot.name }}">{{ bot.name }}</option>
 				{% endfor %}
-			</ul>
-		{% else %}
-			No robots found
-		{% endif %}
-		<!--END TOP 5 VALUABLE ROBOTS-->
-		</div>
+			</select>
+			<!-- END ROBOT SELECTION BOX -->
+						
+			<div id = 'bot_table'>
+			
+			</div>
+			
+			</div>
 		
-		<div id="bots-wins">
-
-		<!--START TOP 5 WINNING ROBOTS-->
-		<h4 id="profile-sub-header">Your top 5 winning robots</h4>
-
-		{% if top5_winning_robots %}
-			<ul>
-				<!--start loop-->
-				{% for robot in top5_winning_robots %}
-					<li>
-						name: {{ robot.name }}<br>
-						type: {{robot.type}} <br>						
-					</li>
-				{% endfor %}
-				<!--end loop-->				
-			</ul>
-		{% else %}
-			<!--no robots found-->
-			No robots found
-		{% endif %}
-		
-		<!--END TOP 5 WINNING ROBOTS-->
-		</div>
-		
-		<!-- area where user can expand area to see table of all the player's robots -->
-		<!-- right now doesnt account for user authentication -->
-
-		<h3 id="profile-header">All Robots</h3>
-		View and upgrade all your robots here. <br>
-		
-		Select a robot: <select id = 'select_bot' class = 'select_bot'>
-        {% for bot in robots %}
-
-        <option value = "{{ bot.name }}">{{ bot.name }}</option>
-
-        {% endfor %}
-
-
-    </select>
-    <div id = 'bot_table'></div>
-		
-		</div>
+		<!--END ROBOTS SECTION-->
 				
 
 	{% else %}

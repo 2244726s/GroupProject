@@ -1,3 +1,5 @@
+/* -------------------START navigation bar styling---------------------- */
+/* navigation bar */
 #nav-bar {
 	background-color: #4f4f96;
 	text-align:center;
@@ -8,43 +10,8 @@
 	border-radius: 10px;
 }
 
-#profile-section{
-	width:30%;
-	background-color: #ededed;
-	max-width:30%;	
-	height:400px;
-	display: inline-block;
-	float:center;
-	border-style:dotted;
-	border-color:black;
-	text-align:center;
-}
-
-
-#section{
-	width:30%;
-	background-color: #ededed;
-	max-width:30%;	
-	height:400px;
-	display: inline-block;
-	float:center;
-	border-style:dotted;
-	border-color:black;
-	text-align:center;
-}
-
-
-
-#content{	
-	border-style:solid;
-	border-color: dark blue;
-	border-radius: 10px;
-	margin:auto;
-	width:70%;
-	padding:10px;	
-}
-
-#logo {
+/* SCRAPBOTS */
+#logo { 
 	font-family:Impact;
 	font-size:40px;
 	font-weight:bold;
@@ -52,6 +19,7 @@
 	color:white;
 }
 
+/* leaderboard, about */
 #nav-link {
 	color:white;
 	padding:10px;
@@ -68,7 +36,12 @@
 	text-shadow: 1px 1px 2px lightblue, 0 0 25px lightblue, 0 0 5px lightblue;	
 }
 
+/* div containing 'play' button and menu div */
+#dropdown{
+float:right;
+}
 
+/* button for dropdown menu */
 #play{	
 	background-color:#6ca1cc;
 	border:none;
@@ -79,8 +52,6 @@
     display: inline-block;
     font-size: 16px	
 }
-
-
 
 #menu{
 	background-color:#6ca1cc;
@@ -98,11 +69,53 @@
 	color: #4f4f96;
 }
 
-#dropdown{
-float:right;
+/* -------------------END navigation bar styling---------------------- */
+
+
+/* -------------------START body styling---------------------- */
+/*box for all contetn below navigation bar */
+#content{	
+	border-style:solid;
+	border-color: dark blue;
+	border-radius: 10px;
+	margin:auto;
+	width:70%;
+	padding:10px;	
+}
+
+/* sections for player info, robots and friends */
+#profile-section{
+	width:30%;
+	background-color: #ededed;
+	max-width:30%;	
+	height:400px;
+	display: inline-block;
+	float:center;
+	border-style:dotted;
+	border-color:black;
+	text-align:center;
 }
 
 
+/* section for overall leaderboards */
+#section{
+	width:30%;
+	background-color: #ededed;
+	max-width:30%;	
+	height:400px;
+	display: inline-block;
+	float:center;
+	border-style:dotted;
+	border-color:black;
+	text-align:center;
+}
+/* -------------------END body styling---------------------- */
+
+
+
+/* text formatting */
+
+/*header containing username in profile page */
 #username{
 	color: #6ca1cc;
 	font-family:helvetica;
@@ -110,6 +123,7 @@ float:right;
 	
 }
 
+/*section headers in profile*/
 #profile-header{
 	color: #6ca1cc;
 	font-family:helvetica;
@@ -117,6 +131,7 @@ float:right;
 	
 }
 
+/*section sub-headers in profile*/
 #profile-sub-header{
 	
 	color: black;
@@ -125,6 +140,7 @@ float:right;
 	
 }
 
+/*sort buttons for robot leaderboards in profile page */
 #value, #wins {
 	
 	background-color:#6ca1cc;
