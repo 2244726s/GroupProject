@@ -1,3 +1,6 @@
+
+
+
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect, HttpResponse
@@ -38,46 +41,48 @@ def show_profile(request, profile_name):
 def upgrade(request):
     ''' ajax view used for increasing stats of robots'''
     if request.method == 'GET':
-        stat = request.GET['stat']
-        bot_id = int(request.GET['bot_id'])
+        stat = request.GET.get('stat',"")
+        bot_name = request.GET.get('bot_name',"")
 
         #try to  find robot with given id
         try:
-            bot = Robot.objects.get(id=bot_id)
+            bot = Robot.objects.get(name = bot_name)
+
+            if(stat == 'speed'):
+                bot.owner.scrap -= bot.speed*25
+                bot.speed += 1
+            elif(stat == 'dodge'):
+                bot.owner.scrap -= bot.dodge*25
+                bot.dodge+= 1
+            elif(stat == 'armour'):
+                bot.owner.scrap -= bot.armour*25
+                bot.armour+= 1
+            elif(stat == 'weapon'):
+                bot.owner.scrap -= bot.weapon*25
+                bot.weapon+= 1
+            elif(stat == 'accuracy'):
+                bot.owner.scrap -= bot.accuracy*25
+                bot.accuracy+= 1
+
+            bot.save()
+            bot.owner.save()
+        # returned new rendered table
+            response =  render(request, 'bots/bot_table.html', {
+                'robot' : bot,
+                'stats' : bot.get_stats(),
+                'player' : bot.owner,})
+            return response
         except: # invalid robot id
             print('upgrade was called with invalid robot id!!!')
             # assume player has enough scrap, since otherwise they wouldnt have access to button that calls this
+            return render(request, 'bots/bot_table.html',{'message': bot_name})
 
-        if(stat == 'speed'):
-            bot.owner.scrap -= bot.speed*25
-            bot.speed += 1
-        elif(stat == 'dodge'):
-            bot.owner.scrap -= bot.dodge*25
-            bot.dodge+= 1
-        elif(stat == 'armour'):
-            bot.owner.scrap -= bot.armour*25
-            bot.armour+= 1
-        elif(stat == 'weapon'):
-            bot.owner.scrap -= bot.weapon*25
-            bot.weapon+= 1
-        elif(stat == 'accuracy'):
-            bot.owner.scrap -= bot.accuracy*25
-            bot.accuracy+= 1
-
-        bot.save()
-        bot.owner.save()
-        # returned new rendered table
-        response =  render(request, 'bots/bot_table.html', {
-            'robot' : bot,
-            'stats' : bot.get_stats(),
-            'player' : bot.owner,})
-        return response
 
 
 def display_bot(request):
     print("Test2")
     if request.method == "GET":
-        bot_name = request.GET.get('bot_name',0)
+        bot_name = request.GET.get('bot_name','')
 
 
         try:
