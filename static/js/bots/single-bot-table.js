@@ -21,17 +21,17 @@ $(document).ready(function() {
 	// assign click listener for stat increase buttons
 	$('.stat-increase').on('click',clickUpgrade);
     $('.select_bot').on('change',displayBot);
-    displayBot();
+    //displayBot();
 // end of ready
 });
 
 
 function displayBot(){
 
-    var id = $('option:selected', this).val();
-    $.get('/bots/get_bot/', {bot_id : id}, function(data){
+    var name = $('#select_bot').find(':selected').text();
+    $.get('/bots/get_bot/', {'bot_name': name}, function(data){
 
         $('#bot_table').html(data);
-        $('.stat-increase').click(clickUpgrade);
+        $('.stat-increase').on('click',clickUpgrade);
     });
 }

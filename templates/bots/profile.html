@@ -80,10 +80,10 @@
 		<!-- right now doesnt account for user authentication -->
 
 		<h2>Robots</h2>
-	<select class = 'select_bot'>
+	<select id = 'select_bot' class = 'select_bot'>
         {% for bot in robots %}
 
-        <option value = "{{ bot.id }}">{{ bot.name }}</option>
+        <option value = "{{ bot.name }}">{{ bot.name }}</option>
 
         {% endfor %}
 

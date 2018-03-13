@@ -75,14 +75,13 @@ def upgrade(request):
 
 
 def display_bot(request):
-
+    print("Test2")
     if request.method == "GET":
-        bot_id = request.GET.get(request,0)
+        bot_name = request.GET.get('bot_name',0)
 
 
         try:
-            bot = robot.objects.get(id = bot_id)
-
+            bot = Robot.objects.get(name = bot_name)
             response =  render(request, 'bots/bot_table.html', {
             'robot' : bot,
             'stats' : bot.get_stats(),
