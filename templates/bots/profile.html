@@ -6,6 +6,7 @@
 	{{player.user.username}}'s profile
 {%endblock%}
 
+
 {%block content_block %}
 {% if player %}
 	<!--START PROFILE SIDEBAR-->
@@ -27,17 +28,23 @@
 	<li>
 		<a href="{% url 'bots:show_profile' player.user.username %}">{{ player.user.username }}</a>
 	</li>
-		{% endfor %}
+		{% endfor %}	
 	</ul>
 		See all users you follow <br>
 		{% else %}
 		No followees found
 		{% endif %}
-	<!--END TOP 5 FOLLOWEES-->
+	<!--END TOP 5 FOLLOWEES-->	
 	</div>
 
 	<div id="section"> <!--requires styling to switch between two orderings-->
-
+	
+		Sort by:
+		<button id="value">value</button>
+		<button id="wins">wins</button>
+		
+		
+		<div id="bots-value">
 		<!--START TOP 5 VALUABLE ROBOTS-->
 		<h3>Your top 5 most valuable robots</h3>
 
@@ -46,15 +53,17 @@
 				{% for robot in top5_valuable_robots %}
 					<li>
 						name: {{ robot.name }} <br>
-						type: {{robot.type}} <br>
+						type: {{robot.type}} <br>				
 					</li>
 				{% endfor %}
 			</ul>
-			 See all robots <br>
 		{% else %}
 			No robots found
 		{% endif %}
 		<!--END TOP 5 VALUABLE ROBOTS-->
+		</div>
+		
+		<div id="bots-wins">
 
 		<!--START TOP 5 WINNING ROBOTS-->
 		<h3>Your top 5 winning robots</h3>
@@ -65,17 +74,46 @@
 				{% for robot in top5_winning_robots %}
 					<li>
 						name: {{ robot.name }}<br>
-						type: {{robot.type}} <br>
+						type: {{robot.type}} <br>						
 					</li>
 				{% endfor %}
-				<!--end loop-->
+				<!--end loop-->				
 			</ul>
-				 See all robots <br>
 		{% else %}
 			<!--no robots found-->
 			No robots found
 		{% endif %}
+		
 		<!--END TOP 5 WINNING ROBOTS-->
+		</div>
+		
+		{% if robots %}
+		
+		<br>
+		<button id="see-all-bots"> See all robots </button>
+		
+		{% endif %}
+		
+		<div id="robots">
+		
+		{%if robots %}
+		
+			<ul>
+			{%for robot in robots%}
+			
+			<li>
+			name: {{robot.name}} <br>
+			type: {{robot.type}}
+			</li>
+			
+			</ul>
+			
+			{% endfor %}
+		
+		{% endif %}
+		
+		</div>
+				
 		<!-- area where user can expand area to see table of all the player's robots -->
 		<!-- right now doesnt account for user authentication -->
 
