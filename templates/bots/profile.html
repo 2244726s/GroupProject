@@ -21,7 +21,7 @@
 	<!--END PROFILE SIDEBAR-->
 
 	<div id="profile-section">
-		
+
 		<!--START TOP 5 FOLLOWEES-->
 		<h3 id="profile-header">Friends leaderboard</h3>
 		{% if top5_winning_followees %}
@@ -30,15 +30,15 @@
 				<li>
 					<a href="{% url 'bots:show_profile' player.user.username %}">{{ player.user.username }}</a>
 				</li>
-					{% endfor %}	
+					{% endfor %}
 			</ul>
 			See all users you follow <br>
 		{% else %}
 			No followees found
 		{% endif %}
-		
+
 	</div>
-		<!--END TOP 5 FOLLOWEES-->	
+		<!--END TOP 5 FOLLOWEES-->
 
 	<!--START ROBOTS SECTION-->
 	<div id="profile-section">
@@ -46,7 +46,7 @@
 			Sort by:
 			<button id="value">value</button>
 			<button id="wins">wins</button>
-					
+
 			<div id="bots-value">
 			<!--START TOP 5 VALUABLE ROBOTS-->
 				<h4 id="profile-sub-header">Your top 5 most valuable robots</h4>
@@ -56,7 +56,7 @@
 						{% for robot in top5_valuable_robots %}
 							<li>
 								name: {{ robot.name }} <br>
-								type: {{robot.type}} <br>				
+								type: {{robot.type}} <br>
 							</li>
 						{% endfor %}
 					</ul>
@@ -65,7 +65,7 @@
 				{% endif %}
 				<!--END TOP 5 VALUABLE ROBOTS-->
 			</div>
-			
+
 			<div id="bots-wins">
 
 			<!--START TOP 5 WINNING ROBOTS-->
@@ -77,28 +77,28 @@
 					{% for robot in top5_winning_robots %}
 						<li>
 							name: {{ robot.name }}<br>
-							type: {{robot.type}} <br>						
+							type: {{robot.type}} <br>
 						</li>
 					{% endfor %}
-					<!--end loop-->				
+					<!--end loop-->
 				</ul>
 			{% else %}
 				<!--no robots found-->
 				No robots found
 			{% endif %}
-			
+
 			<!--END TOP 5 WINNING ROBOTS-->
 			</div>
-			
+
 			<!-- area where user can expand area to see table of all the player's robots -->
 			<!-- right now doesnt account for user authentication -->
 
 			<hr>
 			<h3 id="profile-header">All Robots</h3>
-			
+
 			View and upgrade all your robots here. <br>
-			Select a robot: 
-			
+			Select a robot:
+
 			<!-- START ROBOT SELECTION BOX -->
 			<select id = 'select_bot' class = 'select_bot'>
 				{% for bot in robots %}
@@ -106,15 +106,25 @@
 				{% endfor %}
 			</select>
 			<!-- END ROBOT SELECTION BOX -->
-						
+
 			<div id = 'bot_table'>
-			
+
 			</div>
-			
+
 			</div>
-		
+			{% if robots|length >= 1 %}
+	    		<div id = '1v1_complete'></div>
+			{% endif %}
+
+			{% if robots|length >= 3 %}
+    			<div id = '3v3_complete'></div>
+			{% endif %}
+
+			{% if robots|length >= 5 %}
+			    <div id = '5v5_complete'></div>
+            {% endif %}
 		<!--END ROBOTS SECTION-->
-				
+
 
 	{% else %}
 		Player doesn't exist.
