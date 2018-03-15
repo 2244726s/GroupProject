@@ -6,7 +6,7 @@
 <html>
 		<head lang="en">
 			<meta charset="UTF-8" />
-			
+
 			<link rel="stylesheet" type="text/css" href="{%static 'css/base.css' %}">
 			<title>
 				SCRAPBOTS |
@@ -14,49 +14,50 @@
 					PLAY!
 				{% endblock %}
 			</title>
-			
-		</head>	
-		
-	<body>	
+
+		</head>
+
+	<body>
 		<!-- Navigation Bar-->
 		<div id="nav-bar">
-			
+
 			<a id="logo" href="{% url 'index' %}"> <strong id = "logo"> SCRAPBOTS </strong> </a>
 			<a id="nav-link" href="{% url 'bots:leaderboards' %}"> LEADERBOARDS </a>
-			<a id="nav-link" href="{% url 'bots:about' %}"> ABOUT </a>			
-			
+			<a id="nav-link" href="{% url 'bots:about' %}"> ABOUT </a>
+
 			{% if user.is_authenticated %}
 			<a href="{% url 'bots:show_profile' player.user.username%}"> MyProfile </a>
 			{% else %}
-			
+
 			<!--will make a dropdown button for play and when hovered will display the menu-->
-			
+
 			<div id="dropdown">
 			<button id=play> PLAY </button>
 				<!--menu-->
-				
+
 				<div id="menu">
 				<a id="dropdown-link" href="{% url 'bots:signin' %}"> Sign in </a> <br>
 				<a id="dropdown-link" href="{% url 'bots:signup' %}"> Sign Up </a>
 				</div>
-			
+
 			</div>
-			
+
 			{% endif %}
 		</div>
 		<!--END NAVIGATION BAR-->
-				
+
 		<!-- PAGE CONTENT-->
-		<div id="content">		
+		<div id="content">
 			{% block content_block %}
-			
+
 			SCRAPBOTS
-					
-			{% endblock %}		
+
+			{% endblock %}
 		</div>
 		<!-- END CONTENT -->
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 		<script src = "{% static 'js/bots/single-bot-table.js' %}"></script>
+		<script src = "{% static 'js/bots/matchmake.js' %}"></script>
 		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 		<script src="{% static 'js/jquery.js' %}"></script>
 	</body>

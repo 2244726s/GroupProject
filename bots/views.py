@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect, HttpResponse
 from bots.models import *
 from bots.forms import *
+from bots.matchmaking import matchmake, get_matches
 # Create your views here.
 
 def index(request):
@@ -95,6 +96,123 @@ def display_bot(request):
         except:
             return render(request,'bots/bot_table.html',{})
 
+def validate(request):
+    if request.method == "GET":
+        size = int(request.GET.get('size',0))
+        name = request.GET.get('name','')
+        returner = {}
+        bots = []
+        valid = True
+        bot_names = []
+
+        msg = 'everything works'
+        player = Player.objects.get(user__username = name)
+        for i in range(size):
+            bot_names.append(request.GET.get('b' + str(i),''))
+
+
+        for i in range(size):
+            for j in range(i + 1,size):
+
+                if bot_names[i] == bot_names[j]:
+                    valid = False
+                    msg = 'duplicate bot found'
+
+        try:
+            bots.append(Robot.objects.get(name = bot_names[i]))
+        except:
+            valid = False
+            'bot ' + bot_names[i] + ' not found'
+
+
+        valid = valid and len(bots) > 0
+        if valid:
+
+            try:
+                t = Team.objects.get(player = player, num_bots = len(bots))
+            except:
+                t = None
+
+            duplicate = True
+            if t:
+
+                for i in t.bots.all():
+                    for j in bots:
+                        if i.name != j.name:
+                            duplicate = False
+
+                if duplicate:
+                    games = get_matches(t)
+                    msg = 'team found'
+                else:
+                    games = matchmake(player, bots)
+                    msg = 'team made'
+
+            else:
+                games = matchmake(player, bots)
+                msg = 'team made'
+
+            return render(request,'bots/matchmake.html',{
+                'valid':True,
+                'robots':bots,
+                'player':name,
+                'games':games,
+                'team':bot_names,
+                'size':size,
+                'msg':msg,
+            })
+
+
+
+        else:
+            bots = Robot.objects.filter(owner = player)
+            return render(request,'bots/matchmake.html',{
+                'valid':False,
+                'robots':bots,
+                'player':name,
+                'team':bot_names,
+                'size':size,
+                'msg':msg,
+                })
+
+def resetTeam(request):
+    if request.method == 'GET':
+        size = int(request.GET.get('size',0))
+        name = request.GET.get('name','')
+
+        player = Player.objects.get(user__username = name)
+        bot_names = []
+        bots = Robot.objects.filter(owner = player)
+        for i in range(size):
+            bot_names.append(request.GET.get('b' + str(i),''))
+
+        return render(request, 'bots/matchmake.html',{'valid':False, 'team':bot_names,'robots':bots,'games':'','size':size, 'msg':'please update your team:'})
+
+def initialize(request):
+    if request.method == 'GET':
+        size = int(request.GET.get('size',0))
+        name = request.GET.get('name','')
+
+        player = Player.objects.get(user__username = name)
+        if player:
+
+            try:
+                t = Team.objects.get(player = player, num_bots = size)
+            except:
+                t = None
+
+            if t:
+                matches = get_matches(t)
+                return render(request, 'bots/matchmake.html',{'valid':True, 'team':[i.name for i in t.bots.all()],'games':matches,'size':size, 'msg':'Team found everything worked'})
+
+            else:
+                bots = Robot.objects.filter(owner = player)
+                return render(request, 'bots/matchmake.html',{'valid':False,'robots':bots,'size':size,'team':range(size),'msg':'no team found'})
+
+        else:
+            return render(request, 'bots/matchmake.html',{'valid':False, 'size':size,'msg':'player not found: ' + name})
+
+
 
 
 def leaderboards(request):
@@ -113,7 +231,7 @@ def signin(request):
                 login(request, user)
                 return HttpResponseRedirect(reverse('index'))
             else:
-                return HttpResponse("Your Rango account is disabled.")
+                return HttpResponse("Your account is disabled.")
         else:
             print("Invalid login details: {0}, {1}".format(username, password))
             return HttpResponse("Invalid login details supplied.")

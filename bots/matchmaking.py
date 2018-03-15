@@ -57,9 +57,11 @@ def find_match(player):
 
 
 def matchmake(player, robots, i = 10):
-    teams = Team.objects.filter(player = player)
-    teams.delete()
-    t = Team(player = player, num_bots = len(robots))
+    teams = Team.objects.filter(player = player, num_bots = len(robots))
+    if teams:
+        teams.delete()
+
+    t = Team.objects.create(player = player, num_bots = len(robots))
     t.save()
     for robot in robots:
         t.bots.add(robot)
@@ -68,7 +70,16 @@ def matchmake(player, robots, i = 10):
 
     challenges = find_challenge(t, i)
     remainder = i - len(challenges)
-    if i > 0:
+    if remainder > 0:
+        challenges += create_challenge(t, remainder)
+    return challenges
+
+
+def get_matches(t,i = 10):
+
+    challenges = find_challenge(t,i)
+    remainder = i - len(challenges)
+    if remainder > 0:
         challenges += create_challenge(t, remainder)
     return challenges
 
@@ -100,7 +111,7 @@ def find_challenge(my_team, i):
     my_scrap = sum([i.value for i in my_team.bots.all()])
     for seeker in seekers:
         their_scrap = sum([i.value for i in seeker.challenger.bots.all()])
-        best_fit[seeker] = abs(their_scrap - my_scrap)
+        best_fit[seeker.challenger] = abs(their_scrap - my_scrap)
         # get heuristic for best match
 
     matches = sorti(best_fit,i)

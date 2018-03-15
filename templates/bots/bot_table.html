@@ -9,11 +9,13 @@
                 <tr><td>Wins</td><td>{{ robot.wins }}</td></tr>
                 <tr><td>Losses</td><td>{{ robot.losses }}</td></tr>
                 {% for stat, value in stats.items %}
-		        <tr><td>{{ stat }}</td><td>{{ value }}
+		        <tr><td>{{ stat }}</td><td>{{ value }}</td>
 			        {% if player.scrap|add:0 >= value|mult:25 %}
+			        <td>
 			        	<button class="stat-increase" data-stat="{{ stat }}" data-botid="{{ robot.name }}" />
+			        </td>
 			        {% endif %}
-		    	</td>
+
 		        </tr>
 	            {% endfor %}
 
