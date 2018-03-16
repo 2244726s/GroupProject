@@ -113,16 +113,18 @@
 			</div>
 
 			</div>
-			{% if robots|length >= 1 %}
-	    		<div id = '1v1_complete'></div>
-			{% endif %}
+			{% if user.username == player.user.username %}
+			    {% if robots|length >= 1 %}
+    	    		<div id = '1v1_complete'></div>
+	    		{% endif %}
 
-			{% if robots|length >= 3 %}
-    			<div id = '3v3_complete'></div>
-			{% endif %}
+		    	{% if robots|length >= 3 %}
+    		    	<div id = '3v3_complete'></div>
+		    	{% endif %}
 
-			{% if robots|length >= 5 %}
-			    <div id = '5v5_complete'></div>
+			    {% if robots|length >= 5 %}
+			        <div id = '5v5_complete'></div>
+                {% endif %}
             {% endif %}
 		<!--END ROBOTS SECTION-->
 
