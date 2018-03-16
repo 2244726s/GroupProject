@@ -14,6 +14,7 @@ def index(request):
     context =  {'bot' : Robot.objects.all()[0]}
     return render(request, 'bots/index.html', context)
 
+
 def show_profile(request, profile_name):
     # try to retrieve info about player
     try:
@@ -40,6 +41,7 @@ def show_profile(request, profile_name):
         }
 
     return render(request, 'bots/profile.html', context)
+
 
 def upgrade(request):
     ''' ajax view used for increasing stats of robots'''
@@ -97,6 +99,7 @@ def display_bot(request):
             return response
         except:
             return render(request,'bots/bot_table.html',{})
+
 
 def validate(request):
     if request.method == "GET":
@@ -177,6 +180,7 @@ def validate(request):
                 'msg':msg,
                 })
 
+
 def resetTeam(request):
     if request.method == 'GET':
         size = int(request.GET.get('size',0))
@@ -189,6 +193,7 @@ def resetTeam(request):
             bot_names.append(request.GET.get('b' + str(i),''))
 
         return render(request, 'bots/matchmake.html',{'valid':False, 'team':bot_names,'robots':bots,'games':'','size':size, 'msg':'please update your team:'})
+
 
 def initialize(request):
     if request.method == 'GET':
