@@ -1,6 +1,7 @@
 <!DOCTYPE HTML>
 {% extends 'bots/base.html' %}
 {% load bots_template_tags %}
+{% load staticfiles%}
 
 {%block title_block %}
 	{{player.user.username}}'s profile
@@ -129,7 +130,9 @@
 	{% else %}
 		Player doesn't exist.
 	{% endif %}
-
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src = "{% static 'js/bots/single-bot-table.js' %}"></script>
+	<script src = "{% static 'js/bots/matchmake.js' %}"></script>
 {%endblock%}
 
 

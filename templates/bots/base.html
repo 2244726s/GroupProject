@@ -26,7 +26,7 @@
 			<a id="nav-link" href="{% url 'bots:about' %}"> ABOUT </a>
 
 			{% if user.is_authenticated %}
-			<a href="{% url 'bots:show_profile' player.user.username%}"> MyProfile </a>
+			    <a href="{% url 'bots:show_profile' user.username %}"> MyProfile: {{ user.username }} </a>
 			{% else %}
 
 			<!--will make a dropdown button for play and when hovered will display the menu-->
@@ -56,8 +56,6 @@
 		</div>
 		<!-- END CONTENT -->
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-		<script src = "{% static 'js/bots/single-bot-table.js' %}"></script>
-		<script src = "{% static 'js/bots/matchmake.js' %}"></script>
 		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 		<script src="{% static 'js/jquery.js' %}"></script>
 	</body>

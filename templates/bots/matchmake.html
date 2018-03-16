@@ -42,6 +42,7 @@
             {% for i in games %}
             <tr>
                 <td>{{ i.player.user.name }}</td>
+                <td><button id = '{{ size }}v{{ size }}_play' value = {{ i.player.user.name }}></td>
             </tr>
             {% endfor %}
             </table>

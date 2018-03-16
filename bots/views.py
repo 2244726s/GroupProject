@@ -4,6 +4,7 @@
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect, HttpResponse
+from django.core.urlresolvers import reverse
 from bots.models import *
 from bots.forms import *
 from bots.matchmaking import matchmake, get_matches
@@ -18,6 +19,7 @@ def show_profile(request, profile_name):
     try:
         player = Player.objects.get(user__username = profile_name)
     except: # no player found
+        player = None
         context = {'player': None}
 
     if player:
@@ -248,6 +250,7 @@ def signup(request):
             user = user_form.save()
             user.set_password(user.password)
             user.save()
+            Player.objects.create(user = user)
         else:
             print(user_form.errors)
     else:
