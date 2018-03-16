@@ -5,14 +5,14 @@
 Sign Up
 {% endblock %}
 
-{% block body_block %}
-	<h1>Register for Rango</h1>
+{% block content_block %}
+	<h1>Register for SCRAPBOTS</h1>
 	
 	{% if registered %}
-		Rango says: <strong>Thank you for registering!</strong>
+		<strong>Thank you for registering!</strong>
 		<a href="{% url 'index' %}">Return to the homepage.</a><br />
 		{% else %}
-			Rango says: <strong>register here!</strong><br />
+			<strong>Please provide the following details</strong><br />
 			<form id="user_form" method="post" action="{% url 'bots:signup' %}"
 			enctype="multipart/form-data">
 
@@ -23,6 +23,7 @@ Sign Up
 
 			<!-- Provide a button to click to submit the form. -->
 			<input type="submit" name="submit" value="Register" />
+			Already have an account? <a href="{% url 'bots:signin' %}"> Sign in! </a>
 			</form>
 	{% endif %}
 {% endblock %}

@@ -86,11 +86,9 @@ float:right;
 /* sections for player info, robots and friends */
 #profile-section{
 	width:30%;
-	background-color: #ededed;
-	max-width:30%;	
-	height:400px;
-	display: inline-block;
-	float:center;
+	background-color: #ededed;	
+	height:600px;
+	display:inline-block;
 	border-style:dotted;
 	border-color:black;
 	text-align:center;
@@ -151,6 +149,7 @@ float:right;
 #value:active, #wins:active {
 	background-color: #4f4f96;
 }
+
 
 
 
