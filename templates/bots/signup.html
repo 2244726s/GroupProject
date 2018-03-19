@@ -7,7 +7,7 @@ Sign Up
 
 {% block content_block %}
 	<h1>Register for SCRAPBOTS</h1>
-	
+
 	{% if registered %}
 		<strong>Thank you for registering!</strong>
 		<a href="{% url 'index' %}">Return to the homepage.</a><br />
@@ -26,5 +26,8 @@ Sign Up
 			Already have an account? <a href="{% url 'bots:signin' %}"> Sign in! </a>
 			</form>
 	{% endif %}
+
+
+
 {% endblock %}
 

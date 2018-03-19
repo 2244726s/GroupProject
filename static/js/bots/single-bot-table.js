@@ -28,16 +28,7 @@ function clickUpgrade() {
 
 
 
-        /*
-		$.get('/bots/upgrade/', {bot_id : botId, stat:stat}, function(data) {
-			// update robot table
-			$('#bot_table').html(data);
-			// reassign click listener
-			$('.stat-increase').click(clickUpgrade);
 
-			// end of ajax function
-		});
-		*/
 	// end of click listener
 }
 $(document).ready(function() {

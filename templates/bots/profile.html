@@ -11,7 +11,7 @@
 {%block content_block %}
 {% if player %}
 	<!--START PROFILE SIDEBAR-->
-	
+
 	<div id="profile-section">
 		<h3 id="username">{{player}}</h3>
 		<h4 id="profile-sub-header"> Player information:</h4> <br>
@@ -77,7 +77,7 @@
 			</div>
 
 			{% if user.username == player.user.username %}
-			<div id="profile-section">			
+			<div id="profile-section">
 			View and upgrade all your robots here. <br>
 			Select a robot:
 
@@ -87,8 +87,9 @@
 				<option value = "{{ bot.name }}">{{ bot.name }}</option>
 				{% endfor %}
 			</select>
-			
-			
+			<div id = 'bot_table'></div>
+
+
 			    {% if robots|length >= 1 %}
     	    		<div id = '1v1_complete'></div>
 	    		{% endif %}
@@ -100,7 +101,7 @@
 			    {% if robots|length >= 5 %}
 			        <div id = '5v5_complete'></div>
                 {% endif %}
-			
+
 			</div>
 			{% endif %}
 

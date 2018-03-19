@@ -220,7 +220,51 @@ def initialize(request):
             return render(request, 'bots/matchmake.html',{'valid':False, 'size':size,'msg':'player not found: ' + name})
 
 
+def create_bot(request):
+    if request.method == 'GET':
+        name = request.GET.get('name','')
+        type = request.GET.get('type','')
+        try:
+            player = Player.objects.get(name = request.GET.get('player',''))
+        except:
+            player = None
 
+        if player:
+            if not Robot.objects.filter(name = name).exists():
+                #name isn't taken
+                r = Robot.objects.create(name = name)
+
+                if type == 'aerial':
+                    r.type = type
+                    r.speed = 2
+                    r.dodge = 4
+                    r.armour = 1
+                    r.weapon = 2
+                    r.accuracy = 2
+                    r.save()
+
+                elif type == 'bipedal':
+                    r.speed = 4
+                    r.dodge = 2
+                    r.armour = 2
+                    r.weapon = 2
+                    r.accuracy = 1
+                    r.save()
+
+                elif type == 'wheeled':
+                    r.speed = 1
+                    r.dodge = 2
+                    r.armour = 4
+                    r.weapon = 2
+                    r.accuracy = 2
+                    r.save()
+
+                else:
+                    return render(request,'bots/create_bot.html',{'msg':'invalid type!','valid':'False'})
+
+                return render(request,'bots/create_bot.html',{'msg':'valid','valid':'True'})
+        else:
+            return render(request,'bots/create_bot.html',{'msg':'SOMETHING WENT HORRIBLY WRONG!','valid':'False'})
 
 def leaderboards(request):
     return render(request, 'bots/leaderboards.html')
@@ -244,7 +288,7 @@ def signin(request):
             return HttpResponse("Invalid login details supplied.")
     else:
         return render(request, 'bots/signin.html', {})
-    return render(request, 'bots/signin.html')
+    return render(request, 'bots/signin.html',{})
 
 
 def signup(request):
@@ -256,6 +300,7 @@ def signup(request):
             user.set_password(user.password)
             user.save()
             Player.objects.create(user = user)
+            return render(request, 'bots/index.html',{})
         else:
             print(user_form.errors)
     else:

@@ -41,8 +41,8 @@
             <table>
             {% for i in games %}
             <tr>
-                <td>{{ i.player.user.name }}</td>
-                <td><button id = '{{ size }}v{{ size }}_play' value = {{ i.player.user.name }}></td>
+                <td>{{ i.player.user.username }}</td>
+                <td><button id = '{{ size }}v{{ size }}_play' value = {{ i.player.user.username }}>FIGHT!</button></td>
             </tr>
             {% endfor %}
             </table>
