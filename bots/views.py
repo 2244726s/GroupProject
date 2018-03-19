@@ -274,7 +274,12 @@ def create_bot(request):
             return HttpResponse(json.dumps({'msg':"Player not found"}), content_type="application/json")
 
 def leaderboards(request):
-    return render(request, 'bots/leaderboards.html')
+    context = {
+        'top_bots' : Robot.objects.order_by('-wins')[:10],
+        'top_users' : Player.objects.order_by('-wins')[:10]
+        }
+    
+    return render(request, 'bots/leaderboards.html', context)
 
 def about(request):
     return render(request, 'bots/about.html')

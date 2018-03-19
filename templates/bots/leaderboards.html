@@ -9,13 +9,31 @@
 
 	<!--START 1v1 LEADERBOARD-->
 	<div id="section">
-		<h3> 1v1 Leaderboard </h3>
+		<h3> Top Robots </h3>
+		<ol>
+		{% for bot in top_bots %}				
+		<li>
+		robot: {{bot}} <br>
+		owned by: <a href="{% url 'bots:show_profile' bot.owner %}"> {{bot.owner}} </a>
+		</li>
+		{% endfor %}	
+		</ol>
 	</div>
 	<!--END 1v1 LEADERBOARD-->
 
 	<!--START 3v3 LEADERBOARD-->
 	<div id="section">
-		<h3> 3v3 Leaderboard </h3>
+		<h3> Top Users </h3>
+		
+		<ol>		
+		{% for player in top_users %}				
+		<li>
+		<a href="{% url 'bots:show_profile' player %}"> {{player}} </a>
+		</li>		
+		{% endfor %}
+		</ol>
+		
+		
 	</div>
 	<!--END 3v3 LEADERBOARD-->
 

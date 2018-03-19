@@ -33,10 +33,14 @@
 				<h4 id="profile-sub-header">Top 5 most valuable robots</h4>
 
 				{% if top5_valuable_robots %}
+				<ol>
 						{% for robot in top5_valuable_robots %}
+						<li>
 								name: {{ robot.name }} <br>
 								type: {{robot.type}} <br><br>
+						</li>
 						{% endfor %}
+				</ol>
 				{% else %}
 					No robots found
 				{% endif %}
@@ -50,10 +54,14 @@
 
 			{% if top5_winning_robots %}
 					<!--start loop-->
+					<ol>
+					<li>
 					{% for robot in top5_winning_robots %}
-							name: {{ robot.name }}<br>
-							type: {{robot.type}} <br> <br>
+							name: {{ robot.name }}
+							type: {{robot.type}}
 					{% endfor %}
+					</li>
+					</ol>
 					<!--end loop-->
 			{% else %}
 				<!--no robots found-->
