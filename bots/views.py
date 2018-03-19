@@ -226,18 +226,18 @@ def initialize(request):
 
 
 def create_bot(request):
-    if request.method == 'GET':
-        name = request.GET.get('name','')
-        type = request.GET.get('type','')
+    if request.method == 'POST':
+        name = request.POST.get('name','')
+        type = request.POST.get('type','')
         try:
-            player = Player.objects.get(name = request.GET.get('player',''))
+            player = Player.objects.get(user = request.user)
         except:
             player = None
 
         if player:
             if not Robot.objects.filter(name = name).exists():
                 #name isn't taken
-                r = Robot.objects.create(name = name)
+                r = Robot.objects.create(name = name, owner = player)
 
                 if type == 'aerial':
                     r.type = type
@@ -265,11 +265,11 @@ def create_bot(request):
                     r.save()
 
                 else:
-                    return render(request,'bots/create_bot.html',{'msg':'invalid type!','valid':'False'})
+                    return HttpResponse(json.dumps({'msg':"Invalid type"}), content_type="application/json")
 
-                return render(request,'bots/create_bot.html',{'msg':'valid','valid':'True'})
+                return HttpResponse(json.dumps({'msg':"Totally valid"}), content_type="application/json")
         else:
-            return render(request,'bots/create_bot.html',{'msg':'SOMETHING WENT HORRIBLY WRONG!','valid':'False'})
+            return HttpResponse(json.dumps({'msg':"Player not found"}), content_type="application/json")
 
 def leaderboards(request):
     return render(request, 'bots/leaderboards.html')

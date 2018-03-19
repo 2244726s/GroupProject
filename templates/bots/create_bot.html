@@ -5,7 +5,7 @@
     <h3>Create a New Robot</h3>
 
 
-    {% if value player.scrap >= 7 %}
+    {% if player.scrap >= 7 %}
 
         <form name = 'CreateBot'>
             Name: <input type = 'text' name = 'bot_name' required>
@@ -16,7 +16,7 @@
                 <option value = 'wheeled'>Wheeled</option>
             </select>
 
-            <input type="{{ player.user.name }}" value="Submit">
+            <input type="submit" value="Submit">
 
         </form>
 

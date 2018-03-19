@@ -14,5 +14,6 @@ urlpatterns = [
     url(r'^matchmake/$', views.validate, name = 'validate'),
     url(r'^initialize/$',views.initialize, name = 'initialize'),
     url('^update_team/$',views.resetTeam, name = 'resetTeam'),
+    url(r'^create_bot/$',views.create_bot, name = 'create_bot'),
 ]
 
