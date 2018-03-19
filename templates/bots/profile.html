@@ -76,7 +76,7 @@
 
 			</div>
 
-			{% if user.username == player.user.username %}
+
 			<div id="profile-section">
 			View and upgrade all your robots here. <br>
 			Select a robot:
@@ -89,7 +89,7 @@
 			</select>
 			<div id = 'bot_table'></div>
 
-
+            {% if user.username == player.user.username %}
 			    {% if robots|length >= 1 %}
     	    		<div id = '1v1_complete'></div>
 	    		{% endif %}

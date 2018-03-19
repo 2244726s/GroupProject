@@ -85,17 +85,22 @@ def upgrade(request):
 
 
 def display_bot(request):
-    print("Test2")
     if request.method == "GET":
         bot_name = request.GET.get('bot_name','')
 
 
         try:
             bot = Robot.objects.get(name = bot_name)
+            if bot.owner.user.username == request.user.username:
+                editable = True
+            else:
+                editable = False
+
             response =  render(request, 'bots/bot_table.html', {
             'robot' : bot,
             'stats' : bot.get_stats(),
-            'player' : bot.owner,})
+            'player' : bot.owner,
+            'editable':editable,})
             return response
         except:
             return render(request,'bots/bot_table.html',{})

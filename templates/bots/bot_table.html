@@ -12,7 +12,9 @@
 		        <tr><td>{{ stat }}</td><td>{{ value }}</td>
 			        {% if player.scrap|add:0 >= value|mult:25 %}
 			        <td>
+			            {% if editable %}
 			        	<button class="stat-increase" data-stat="{{ stat }}" data-botid="{{ robot.name }}" />
+			        	{% endif %}
 			        </td>
 			        {% endif %}
 
