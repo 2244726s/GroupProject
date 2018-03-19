@@ -32,18 +32,20 @@
 			<!--START TOP 5 VALUABLE ROBOTS-->
 				<h4 id="profile-sub-header">Top 5 most valuable robots</h4>
 
+				<div id="bots-section">
 				{% if top5_valuable_robots %}
 				<ol>
 						{% for robot in top5_valuable_robots %}
-						<li>
+						<li id="bot-list-item">
 								name: {{ robot.name }} <br>
-								type: {{robot.type}} <br><br>
+								type: {{robot.type}} <br>
 						</li>
 						{% endfor %}
 				</ol>
 				{% else %}
 					No robots found
 				{% endif %}
+				</div>
 				<!--END TOP 5 VALUABLE ROBOTS-->
 			</div>
 
@@ -52,13 +54,14 @@
 			<!--START TOP 5 WINNING ROBOTS-->
 			<h4 id="profile-sub-header">Top 5 winning robots</h4>
 
+			<div id="bots-section">
 			{% if top5_winning_robots %}
 					<!--start loop-->
 					<ol>
-					<li>
+					<li id="bot-list-item">
 					{% for robot in top5_winning_robots %}
-							name: {{ robot.name }}
-							type: {{robot.type}}
+							name: {{ robot.name }}<br>
+							type: {{robot.type}}<br>
 					{% endfor %}
 					</li>
 					</ol>
@@ -67,6 +70,7 @@
 				<!--no robots found-->
 				No robots found
 			{% endif %}
+			</div>
 
 			<!--END TOP 5 WINNING ROBOTS-->
 			</div>
@@ -75,12 +79,23 @@
 			<!-- right now doesnt account for user authentication -->
 
 			<hr>
-			<h3 id="profile-header">All Robots</h3>
-
+			<h3 id="profile-header">All Robots</h3>			
+			<div id="bots-section">
+			{% if robots %}
+			<ul id="bot-list">
 				{% for bot in robots %}
+				<li id="bot-list-item">
 				name : {{ bot.name }} <br>
-				type:  {{bot.type}} <br>
+				type:  {{bot.type}}
+				</li> <br>
 				{% endfor %}
+			</ul>
+			{% else %}
+			You currently have no robots
+			{% endif %}
+			
+			</div>
+			
 
 			</div>
 

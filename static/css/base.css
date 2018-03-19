@@ -93,6 +93,7 @@ float:right;
 	border-color:black;
 	text-align:center;
 	border-radius:10px;
+	overflow:auto;
 }
 
 
@@ -101,7 +102,8 @@ float:right;
 	width:30%;
 	background-color: #ededed;
 	max-width:30%;	
-	height:400px;
+	height:300px;
+	overflow:auto;
 	display: inline-block;
 	float:center;
 	border-style:dotted;
@@ -152,7 +154,27 @@ float:right;
 	background-color: #4f4f96;
 }
 
+#bots-section {
+	background-color:#6ca1cc;
+	overflow: auto;
+	height: 100px;
+	margin:30px;
+	border-style: dotted;
+	border-color: black;
+	border-radius:10px;
+	
+}
 
+#bot-list{
+	
+	list-style-type:none;
+	
+}
 
-
+#bot-list-item{
+	
+	font-family:helvetica;
+	color:white;
+	
+}
 
