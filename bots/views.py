@@ -4,7 +4,9 @@
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect, HttpResponse
+from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
+from django.contrib.auth import logout
 from bots.models import *
 from bots.forms import *
 from bots.matchmaking import matchmake, get_matches
@@ -312,5 +314,8 @@ def signup(request):
         user_form = UserForm()
     return render(request,'bots/signup.html',{'user_form': user_form,'registered': registered})
 
-
+@login_required
+def signout(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('index'))
 

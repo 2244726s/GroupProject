@@ -25,14 +25,23 @@
 			<a id="nav-link" href="{% url 'bots:leaderboards' %}"> LEADERBOARDS </a>
 			<a id="nav-link" href="{% url 'bots:about' %}"> ABOUT </a>
 
-			{% if user.is_authenticated %}
-			    <a href="{% url 'bots:show_profile' user.username %}"> MyProfile: {{ user.username }} </a>
+			{% if user.is_authenticated %}				
+			<div id="dropdown">
+			<button id=play> Signed in as {{ user.username }} ▼</button>
+				<!--menu-->
+
+				<div id="menu">
+				<a id="dropdown-link" href="{% url 'bots:show_profile' user.username %}"> View Profile </a> <br>
+				<a id="dropdown-link" href="{% url 'bots:signout' %}"> Sign Out </a>
+				</div>
+
+			</div>
 			{% else %}
 
 			<!--will make a dropdown button for play and when hovered will display the menu-->
 
 			<div id="dropdown">
-			<button id=play> PLAY </button>
+			<button id=play> PLAY ▼</button>
 				<!--menu-->
 
 				<div id="menu">

@@ -9,6 +9,7 @@ urlpatterns = [
     url(r'^leaderboards/$', views.leaderboards, name='leaderboards'),
     url(r'^signin/$', views.signin, name='signin'),
     url(r'^signup/$', views.signup, name='signup'),
+    url(r'^signout/$', views.signout, name='signout'),
     url(r'^about/$', views.about, name='about'),
     url(r'^get_bot/$', views.display_bot, name='display_bot'),
     url(r'^matchmake/$', views.validate, name = 'validate'),

@@ -55,12 +55,10 @@ float:right;
 
 #menu{
 	background-color:#6ca1cc;
-	position:absolute;
-	min-width:10%;
-	min-height:10%;
 	box-shadow: 2px 2px 1px #aaaaaa;
 	padding:10px;
 	text-align:center;
+	position:absolute;
 }
 
 #dropdown-link{
@@ -82,6 +80,7 @@ float:right;
 	width:70%;
 	padding:10px;	
 	text-align:center;
+	z-index:1;
 }
 
 /* sections for player info, robots and friends */
@@ -93,6 +92,7 @@ float:right;
 	border-style:dotted;
 	border-color:black;
 	text-align:center;
+	border-radius:10px;
 }
 
 
@@ -106,6 +106,7 @@ float:right;
 	float:center;
 	border-style:dotted;
 	border-color:black;
+	border-radius:10px;
 	text-align:center;
 }
 /* -------------------END body styling---------------------- */
