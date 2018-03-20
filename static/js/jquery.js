@@ -3,13 +3,13 @@ $(document).ready(event => {
 	$("#menu").hide();
 	$("#bots-wins").hide();
 	$("#bots-value").hide();
-	$("#robots").hide();
+	$("#all-bots").show();
 	
 	$("#wins").on("click", event => {
 		
 	$("#bots-wins").show();
 	$("#bots-value").hide();
-	$("#robots").hide();
+	$("#all-bots").hide();
 		
 	})
 	
@@ -17,7 +17,7 @@ $(document).ready(event => {
 		
 	$("#bots-value").show();		
 	$("#bots-wins").hide();	
-	$("#robots").hide();
+	$("#all-bots").hide();
 	})
 	
 	$("#play").on("mouseenter", event => {
@@ -29,11 +29,11 @@ $(document).ready(event => {
 		$("#menu").hide();		
 	})
 	
-	$("#see-all-bots").on("click", event => {
+	$("#all").on("click", event => {
 		
 	$("#bots-value").hide();		
 	$("#bots-wins").hide();	
-	$("#robots").show();
+	$("#all-bots").show();
 	
 	})
 
