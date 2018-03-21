@@ -10,10 +10,26 @@ Home
 <div id="section">
 
 <h3 id="profile-header" > Newest Users </a>
+<table>
+{% for player in players %}
+    <tr>
+        <td>
+            <a href="{% url 'bots:show_profile' player.user.username %}">{{ player.user.username }}</a>
 
 
+        </td>
+        <td>
+            {{ player.user.date_joined }}
+
+        </td>
+
+
+
+    </tr>
+{% endfor %}
+</table>
 
 </div>
-	
+
 
 {% endblock %}

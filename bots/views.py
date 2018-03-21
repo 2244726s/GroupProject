@@ -14,7 +14,7 @@ from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 
 def index(request):
-    context =  {'bot' : Robot.objects.all()[0]}
+    context =  {'players' : Player.objects.all().order_by('user__date_joined')[:5]}
     return render(request, 'bots/index.html', context)
 
 
