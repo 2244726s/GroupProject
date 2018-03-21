@@ -10,6 +10,7 @@ from django.contrib.auth import logout
 from bots.models import *
 from bots.forms import *
 from bots.matchmaking import matchmake, get_matches
+from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 
 def index(request):
@@ -77,7 +78,8 @@ def upgrade(request):
             response =  render(request, 'bots/bot_table.html', {
                 'robot' : bot,
                 'stats' : bot.get_stats(),
-                'player' : bot.owner,})
+                'player' : bot.owner,
+                'editable': True})
             return response
         except: # invalid robot id
             print('upgrade was called with invalid robot id!!!')
@@ -227,21 +229,34 @@ def initialize(request):
             return render(request, 'bots/matchmake.html',{'valid':False, 'size':size,'msg':'player not found: ' + name})
 
 
+
+def validate_name(request):
+    if request.method == 'GET':
+        name = request.GET.get('name','')
+        type = request.GET.get('type','')
+        if Robot.objects.filter(name = name).count() == 0:
+            return HttpResponse(name + ' is available' + str(Robot.objects.filter(name = name).count()))
+        return HttpResponse(name + ' is already in use')
+
+
+@csrf_exempt
 def create_bot(request):
-    if request.method == 'POST':
-        name = request.POST.get('name','')
-        type = request.POST.get('type','')
+
+    if request.method == 'GET':
+        name = request.GET.get('name','error')
+        type = request.GET.get('type','error')
         try:
             player = Player.objects.get(user = request.user)
         except:
             player = None
 
         if player:
-            if not Robot.objects.filter(name = name).exists():
+            if Robot.objects.filter(name = name, owner = player).count() == 0:
                 #name isn't taken
-                r = Robot.objects.create(name = name, owner = player)
+
 
                 if type == 'aerial':
+                    r = Robot.objects.create(name = name, owner = player, value = 7)
                     r.type = type
                     r.speed = 2
                     r.dodge = 4
@@ -251,6 +266,7 @@ def create_bot(request):
                     r.save()
 
                 elif type == 'bipedal':
+                    r = Robot.objects.create(name = name, owner = player, value = 7)
                     r.speed = 4
                     r.dodge = 2
                     r.armour = 2
@@ -259,6 +275,7 @@ def create_bot(request):
                     r.save()
 
                 elif type == 'wheeled':
+                    r = Robot.objects.create(name = name, owner = player, value = 7)
                     r.speed = 1
                     r.dodge = 2
                     r.armour = 4
@@ -267,18 +284,22 @@ def create_bot(request):
                     r.save()
 
                 else:
-                    return HttpResponse(json.dumps({'msg':"Invalid type"}), content_type="application/json")
+                    return HttpResponse('type error-' + type)
 
-                return HttpResponse(json.dumps({'msg':"Totally valid"}), content_type="application/json")
+                return HttpResponseRedirect('')
+            else:
+                return HttpResponse('name error-'+ name + str(Robot.objects.filter(name = name).count()))
         else:
-            return HttpResponse(json.dumps({'msg':"Player not found"}), content_type="application/json")
+            return HttpResponse('player error')
+    else:
+        return HttpResponse(request.method)
 
 def leaderboards(request):
     context = {
         'top_bots' : Robot.objects.order_by('-wins')[:10],
         'top_users' : Player.objects.order_by('-wins')[:10]
         }
-    
+
     return render(request, 'bots/leaderboards.html', context)
 
 def about(request):
@@ -311,7 +332,7 @@ def signup(request):
             user = user_form.save()
             user.set_password(user.password)
             user.save()
-            Player.objects.create(user = user)
+            Player.objects.create(user = user, scrap = 10)
             return render(request, 'bots/index.html',{})
         else:
             print(user_form.errors)

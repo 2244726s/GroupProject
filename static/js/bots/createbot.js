@@ -10,33 +10,65 @@
 
 
 $(document).ready(function(){
-
-    $('#CreateBot').on('submit',create_bot);
+    $('#new_bot_name').on('change', validate_bot);
+    $('#create_bot').on('click',create_bot);
+    validate_bot();
 
 
 });
 
 
+function validate_bot(){
+    var name = $('#new_bot_name').val();
+    if(name.length > 0){
 
+    $.ajax({
+        type: 'GET',
+        url: "/bots/validate_new_bot/",
+        data:{
+            'name':name
+        },
+        success: function(data){
+
+            $('#create_bot_err').html(data);
+        },
+
+
+    });
+    }else{
+        $('#create_bot_err').html('please enter a name');
+    }
+
+
+}
 
 function create_bot(){
 
     event.preventDefault();
-    var form = document.getElementById("CreateBot");
-    var name = form.elements[0].value;
-    var type = form.elements[1].value;
-    var player = form.elements[2].value;
+    var name = $('#new_bot_name').val();
+    alert(name)
+    var type = $('#type_selector').find(':selected').val();
+    alert(type)
+    var csrf_token = $('#csrf').val();
+
+    $.get(
+        '/bots/create_bot/',
+        {
+            'name':name,
+            'type':type,
+        },
+        function(data){
+        $('create_bot_err').html(data);
 
 
+        });
 
 
-
-
+    /*
     $.ajax({
 
         type: 'POST',
         url: "/bots/create_bot/",
-        dataType:"json",
         data: {
         'name':name,
         'type':type,
@@ -51,4 +83,5 @@ function create_bot(){
     },
 
     });
+    */
 }

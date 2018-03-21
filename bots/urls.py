@@ -1,4 +1,5 @@
 from django.conf.urls import url, include
+from django.views.decorators.csrf import csrf_exempt
 from bots import views
 
 app_name= 'bots'
@@ -15,6 +16,7 @@ urlpatterns = [
     url(r'^matchmake/$', views.validate, name = 'validate'),
     url(r'^initialize/$',views.initialize, name = 'initialize'),
     url('^update_team/$',views.resetTeam, name = 'resetTeam'),
-    url(r'^create_bot/$',views.create_bot, name = 'create_bot'),
+    url(r'^create_bot/$',csrf_exempt(views.create_bot), name = 'create_bot'),
+    url(r'^validate_new_bot/$',views.validate_name,name = 'validate_name'),
 ]
 

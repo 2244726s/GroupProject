@@ -27,11 +27,11 @@ class Robot(models.Model):
     wins = models.IntegerField(default = 0)
     losses= models.IntegerField(default = 0)
     # robot stats
-    speed = models.IntegerField()
-    dodge = models.IntegerField()
-    armour = models.IntegerField()
-    weapon = models.IntegerField()
-    accuracy = models.IntegerField()
+    speed = models.IntegerField(null = True, blank = True)
+    dodge = models.IntegerField(null = True, blank = True)
+    armour = models.IntegerField(null = True, blank = True)
+    weapon = models.IntegerField(null = True, blank = True)
+    accuracy = models.IntegerField(null = True, blank = True)
     # returns dictionary with names of stats mapped to corresponding values
     def get_stats(self):
         stats = {
