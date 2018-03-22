@@ -41,6 +41,7 @@ def show_profile(request, profile_name):
             'robots' : Robot.objects.filter(owner=player),
             # list of stat names
             'stats' : ['speed', 'dodge', 'armour', 'weapon', 'accuracy'],
+            'battleHistory' : Battle.objects.filter(participants = player).order_by('-date')
         }
 
     return render(request, 'bots/profile.html', context)

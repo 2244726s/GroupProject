@@ -24,6 +24,20 @@
 
 		<h3 id="profile-sub-header">Battle History</h3>
 		<div id="bots-section">
+
+			{% if battleHistory %}
+				{% for battle in battleHistory %}
+
+				{{battle.log}}
+				{{battle.date}}
+
+				{% endfor %}
+			{% else %}
+				<div id='errorMessage'>No battle history</div>
+			{% endif %}
+			
+
+
 		</div>
 	</div>
 	<!--END PROFILE SIDEBAR-->
