@@ -59,12 +59,14 @@
 			{% if top5_winning_robots %}
 					<!--start loop-->
 					<ol>
-					<li id="bot-list-item">
+					
 					{% for robot in top5_winning_robots %}
+					<li id="bot-list-item">
 							name: {{ robot.name }}<br>
 							type: {{robot.type}}<br>
-					{% endfor %}
 					</li>
+					{% endfor %}
+
 					</ol>
 					<!--end loop-->
 			{% else %}
