@@ -14,7 +14,7 @@ from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 
 def index(request):
-    context =  {'players' : Player.objects.all().order_by('user__date_joined')[:5]}
+    context =  {'players' : Player.objects.all().order_by('-user__date_joined')[:5]}
     return render(request, 'bots/index.html', context)
 
 
@@ -235,7 +235,7 @@ def validate_name(request):
         name = request.GET.get('name','')
         type = request.GET.get('type','')
         if Robot.objects.filter(name = name).count() == 0:
-            return HttpResponse(name + ' is available' + str(Robot.objects.filter(name = name).count()))
+            return HttpResponse(name + ' is available')
         return HttpResponse(name + ' is already in use')
 
 
@@ -253,7 +253,8 @@ def create_bot(request):
         if player:
             if Robot.objects.filter(name = name, owner = player).count() == 0:
                 #name isn't taken
-
+                player.scrap -= 10
+                player.save()
 
                 if type == 'aerial':
                     r = Robot.objects.create(name = name, owner = player, value = 7)

@@ -46,10 +46,7 @@ function create_bot(){
 
     event.preventDefault();
     var name = $('#new_bot_name').val();
-    alert(name)
     var type = $('#type_selector').find(':selected').val();
-    alert(type)
-    var csrf_token = $('#csrf').val();
 
     $.get(
         '/bots/create_bot/',
@@ -58,6 +55,7 @@ function create_bot(){
             'type':type,
         },
         function(data){
+            alert('new robot created, please refresh the page')
         $('create_bot_err').html(data);
 
 
