@@ -194,12 +194,14 @@ def resetTeam(request):
     if request.method == 'GET':
         size = int(request.GET.get('size',0))
         name = request.GET.get('name','')
-
+        team = Team.objects.get(player = name, num_bots = size)
+        team.delete()
         player = Player.objects.get(user__username = name)
         bot_names = []
         bots = Robot.objects.filter(owner = player)
         for i in range(size):
             bot_names.append(request.GET.get('b' + str(i),''))
+
 
         return render(request, 'bots/matchmake.html',{'valid':False, 'team':bot_names,'robots':bots,'games':'','size':size, 'msg':'please update your team:'})
 
@@ -334,7 +336,8 @@ def signup(request):
             user.set_password(user.password)
             user.save()
             Player.objects.create(user = user, scrap = 10)
-            return render(request, 'bots/index.html',{})
+            login(request, user)
+            return render(request, 'bots/index.html',{'players' : Player.objects.all().order_by('-user__date_joined')[:5]})
         else:
             print(user_form.errors)
     else:

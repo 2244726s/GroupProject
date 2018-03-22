@@ -87,14 +87,15 @@ def sorti(best_fit, i):
 
     returner = []
     #iterator
+    listify = list(best_fit.keys())
+    while(len(returner) < len(best_fit.keys()) and len(returner) <= i):
 
-    while(len(returner) < len(best_fit.keys()) and len(returner) < i):
-        min = best_fit.keys()[0]
+        min = listify[0]
 
-        for key in best_fit.keys():
+        for key in listify:
             if (best_fit[min] > best_fit[key]) and key not in returner:
                 min = key
-
+        listify.remove(min)
         returner.append(min)
 
     return returner
@@ -133,6 +134,5 @@ def create_challenge(my_team, i):
         best_fit[seeker] = abs(their_scrap - my_scrap)
 
     return sorti(best_fit,i)
-
 
 

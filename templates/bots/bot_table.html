@@ -13,7 +13,7 @@
 			        {% if player.scrap|add:0 >= value|mult:25 %}
 			        <td>
 			            {% if editable %}
-			        	<button class="stat-increase" data-stat="{{ stat }}" data-botid="{{ robot.name }}" />
+			        	<button class="stat-increase" data-stat="{{ stat }}" data-botid="{{ robot.name }}">+</button>
 			        	{% endif %}
 			        </td>
 			        {% endif %}
@@ -26,7 +26,7 @@
 
         {% else %}
 
-            Error no robot found!
+            You don't currently own any Robots!
         {% endif %}
     </div>
 
