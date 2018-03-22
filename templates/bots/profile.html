@@ -16,9 +16,15 @@
 		<h3 id="username">{{player}}</h3>
 		<h4 id="profile-sub-header"> Player information:</h4> <br>
 		<b>Number of Robots:</b> {{number_of_robots}} <br>
-		<b>Battles Won:</b> {{player.wins}} <br><br><hr>
+		<b>Battles Won:</b> {{player.wins}} <br><br>
+		<b>Scrap:</b> {{player.scrap}} <br><br>
+		<hr>
 		<b>Playing since:</b> <br>
 		{{ player.user.date_joined }} <br>
+
+		<h3 id="profile-sub-header">Battle History</h3>
+		<div id="bots-section">
+		</div>
 	</div>
 	<!--END PROFILE SIDEBAR-->
 	<!--START ROBOTS SECTION-->
@@ -44,7 +50,7 @@
 						{% endfor %}
 				</ol>
 				{% else %}
-					<div id='errorMessage'> Error no robot found! </div>
+					<div id='errorMessage'> You don't currently own any Robots! </div>
 				{% endif %}
 				</div>
 				<!--END TOP 5 VALUABLE ROBOTS-->
@@ -71,7 +77,7 @@
 					<!--end loop-->
 			{% else %}
 				<!--no robots found-->
-				<div id='errorMessage'> Error no robot found! </div>
+				<div id='errorMessage'> You don't currently own any Robots! </div>
 			{% endif %}
 			</div>
 
@@ -94,7 +100,7 @@
 				{% endfor %}
 			</ul>
 			{% else %}
-			<div id='errorMessage'> Error no robot found! </div>
+			<div id='errorMessage'> You don't currently own any Robots! </div>
 			{% endif %}
 			</div>
 

@@ -9,12 +9,12 @@
 
 	<!--START ROBOT LEADERBOARD-->
 	<div id="section">
-		<h3> Top Robots </h3>
+		<h3 id="profile-header"> Top Robots </h3>
 		<ol>
 		{% for bot in top_bots %}				
 		<li>
 		robot: {{bot}} <br>
-		owned by: <a href="{% url 'bots:show_profile' bot.owner %}"> {{bot.owner}} </a>
+		owned by: <a id="dropdown-link" href="{% url 'bots:show_profile' bot.owner %}"> {{bot.owner}} </a>
 		</li><br>
 		{% endfor %}	
 		</ol>
@@ -23,12 +23,11 @@
 
 	<!--START USER LEADERBOARD-->
 	<div id="section">
-		<h3> Top Users </h3>
-		
+		<h3 id="profile-header"> Top Users </h3>
 		<ol>		
 		{% for player in top_users %}				
 		<li>
-		<a href="{% url 'bots:show_profile' player %}"> {{player}} </a>
+		<a id="dropdown-link" href="{% url 'bots:show_profile' player %}"> {{player}} </a>
 		</li><br>	
 		{% endfor %}
 		</ol>

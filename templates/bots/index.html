@@ -14,12 +14,12 @@ Home
 {% for player in players %}
     <tr>
         <td>
-            <a href="{% url 'bots:show_profile' player.user.username %}">{{ player.user.username }}</a>
+            <a id="dropdown-link" href="{% url 'bots:show_profile' player.user.username %}">{{ player.user.username }}</a>
 
 
         </td>
         <td>
-            {{ player.user.date_joined }}
+            <h4 id="profile-sub-header">{{ player.user.date_joined }}</h4>
 
         </td>
 
