@@ -5,11 +5,11 @@ from bots.models import Player, Robot, Challenge, Team
 from bots.mechanics import battle
 import json
 
-def challenge(player1, player2, sorted_robots):
+def challenge(player1, player2,size, sorted_robots):
     # check if the challengee already issued a challenge to the challenger
     try:
-        challenger_team = Team.objects.get(player = player1, num_bots = len(sorted_robots))
-        challengee_team = Team.objects.get(player = player2, num_bots = len(sorted_robots))
+        challenger_team = Team.objects.get(player = player1, num_bots = size)
+        challengee_team = Team.objects.get(player = player2, num_bots = size)
     except:
         print("something has gone wrong, I think the tests need to be updated")
 
@@ -33,54 +33,31 @@ def challenge(player1, player2, sorted_robots):
         # add all the robots
 
 
-def find_match(player):
-	# list of players looking for match
-	seekers = Player.objects.filter(looking_for_match = True)
-	# check if there are at least 10 players looking for match
-	if(len(seekers>= 10)):
-		# find opponent with closest value of robots
-		opponent = seekers[0]
-		for seeker in seekers:
-			# check if seeker's robot scrap value is closer to to player's robot's scrap value
-			if abs(player.chosen_robot.value - seeker.chosen_robot.value) < abs(player.chosen_robot.value - opponent.chosen_robot.value):
-				opponent = seeker
-
-		# battle(player.chosen_robot, opponent.chosen__robot)
-		# unflag opponent from looking for match
-		opponent.looking_for_match = False
-		opponent.save()
-
-	else: # list of players looking for match is less than ten
-		# flag the player as llooking for match
-		player.looking_for_match = True
-		player.save()
-
-
-def matchmake(player, robots, i = 10):
-    teams = Team.objects.filter(player = player, num_bots = len(robots))
+def matchmake(player, robots, size, i = 10):
+    teams = Team.objects.filter(player = player, num_bots = size)
     if teams:
         teams.delete()
 
-    t = Team.objects.create(player = player, num_bots = len(robots))
+    t = Team.objects.create(player = player, num_bots = size)
     t.save()
     for robot in robots:
         t.bots.add(robot)
     t.save()
     # update players robot roster before searching for new matches
 
-    challenges = find_challenge(t, i)
+    challenges = find_challenge(t,size, i)
     remainder = i - len(challenges)
     if remainder > 0:
-        challenges += create_challenge(t, remainder)
+        challenges += create_challenge(t,size, remainder)
     return challenges
 
 
-def get_matches(t,i = 10):
+def get_matches(t,size ,i = 10):
 
-    challenges = find_challenge(t,i)
+    challenges = find_challenge(t, size,i)
     remainder = i - len(challenges)
     if remainder > 0:
-        challenges += create_challenge(t, remainder)
+        challenges += create_challenge(t, size, remainder)
     return challenges
 
 def sorti(best_fit, i):
@@ -101,10 +78,10 @@ def sorti(best_fit, i):
     return returner
 
 
-def find_challenge(my_team, i):
+def find_challenge(my_team,size, i):
     # finds the best i challenges that I have received
 
-    seekers = Challenge.objects.filter(num_bots = my_team.num_bots).filter(challengee = my_team)
+    seekers = Challenge.objects.filter(num_bots = size).filter(challengee = my_team)
     #find all teams of the same size as mine who have challenged me
     # __ is used to access properties of the foreign key
 
@@ -122,9 +99,9 @@ def find_challenge(my_team, i):
 
 
 
-def create_challenge(my_team, i):
+def create_challenge(my_team,size, i):
 
-    seekers = Team.objects.exclude(player = my_team.player).filter(num_bots = my_team.num_bots)
+    seekers = Team.objects.exclude(player = my_team.player).filter(num_bots = size)
     my_scrap = sum([i.value for i in my_team.bots.all()])
 
     best_fit = {}

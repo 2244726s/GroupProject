@@ -35,7 +35,7 @@
 			{% else %}
 				<div id='errorMessage'>No battle history</div>
 			{% endif %}
-			
+
 
 
 		</div>
@@ -79,7 +79,7 @@
 			{% if top5_winning_robots %}
 					<!--start loop-->
 					<ol>
-					
+
 					{% for robot in top5_winning_robots %}
 					<li id="bot-list-item">
 							name: {{ robot.name }}<br>
@@ -176,6 +176,9 @@
 
                 </div>
 
+
+
+			</div>
 			    {% if robots|length >= 1 %}
     	    		<div id = '1v1_complete'></div>
 	    		{% endif %}
@@ -187,8 +190,6 @@
 			    {% if robots|length >= 5 %}
 			        <div id = '5v5_complete'></div>
                 {% endif %}
-
-			</div>
 			{% endif %}
 
 		<!--END ROBOTS SECTION-->

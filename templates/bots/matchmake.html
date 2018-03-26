@@ -1,5 +1,5 @@
 {% load bots_template_tags %}
-
+{% load static %}
 
 <div id = '{{ size }}v{{ size }}_complete'>
     <h3>{{ size }}V{{ size }}</h3>
@@ -36,15 +36,22 @@
 
     <div id = 'gameList'>
         {%if valid %}
-
             <table>
             {% for i in games %}
             <tr>
                 <td>{{ i.player.user.username }}</td>
-                <td><button id = '{{ size }}v{{ size }}_play' value = {{ i.player.user.username }}>FIGHT!</button></td>
+
+                <td><select id = '{{ size }}_enemy'>
+                    {% for bot in i.bots.all %}
+                    <option value = '{{ bot.name }}'>{{ bot.name }}</option>
+                    {% endfor %}
+                </select></td>
+                <td><button id = '{{ size }}v{{ size }}_play' value = '{{ i.player.user.username }}'>FIGHT!</button></td>
             </tr>
             {% endfor %}
+            <tr><div id = '{{ size }}_enemy_stats'></div></tr>
             </table>
+
         {% else %}
         <p>Please enter {{ size }} unique bots</p>
 

@@ -9,7 +9,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth import logout
 from bots.models import *
 from bots.forms import *
-from bots.matchmaking import matchmake, get_matches
+from bots.matchmaking import matchmake, get_matches, challenge
 from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 
@@ -111,6 +111,9 @@ def display_bot(request):
             return render(request,'bots/bot_table.html',{})
 
 
+
+
+
 def validate(request):
     if request.method == "GET":
         size = int(request.GET.get('size',0))
@@ -144,7 +147,7 @@ def validate(request):
         if valid:
 
             try:
-                t = Team.objects.get(player = player, num_bots = len(bots))
+                t = Team.objects.get(player = player, num_bots = size)
             except:
                 t = None
 
@@ -157,14 +160,14 @@ def validate(request):
                             duplicate = False
 
                 if duplicate:
-                    games = get_matches(t)
+                    games = get_matches(t,size)
                     msg = 'team found'
                 else:
-                    games = matchmake(player, bots)
+                    games = matchmake(player, bots, size)
                     msg = 'team made'
 
             else:
-                games = matchmake(player, bots)
+                games = matchmake(player, bots, size)
                 msg = 'team made'
 
             return render(request,'bots/matchmake.html',{
@@ -221,7 +224,7 @@ def initialize(request):
                 t = None
 
             if t:
-                matches = get_matches(t)
+                matches = get_matches(t, size)
                 return render(request, 'bots/matchmake.html',{'valid':True, 'team':[i.name for i in t.bots.all()],'games':matches,'size':size, 'msg':'Team found everything worked'})
 
             else:
@@ -230,6 +233,28 @@ def initialize(request):
 
         else:
             return render(request, 'bots/matchmake.html',{'valid':False, 'size':size,'msg':'player not found: ' + name})
+
+
+def fight(request):
+    if request.method == 'GET':
+        name = request.GET.get('name','')
+        size = int(request.GET.get('size',''))
+        opponent = request.GET.get('opponent','')
+
+
+        me = Player.objects.get(user__username = name)
+        them = Player.objects.get(user__username = opponent)
+
+
+        my_team = Team.objects.get(player = me, num_bots = size)
+        challenge(me, them,size, my_team.bots.all())
+
+        return HttpResponse('Battle submitted')
+
+
+
+
+
 
 
 

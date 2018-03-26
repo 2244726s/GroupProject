@@ -18,5 +18,6 @@ urlpatterns = [
     url('^update_team/$',views.resetTeam, name = 'resetTeam'),
     url(r'^create_bot/$',csrf_exempt(views.create_bot), name = 'create_bot'),
     url(r'^validate_new_bot/$',views.validate_name,name = 'validate_name'),
+    url(r'^fight/$',views.fight,name = 'fight'),
 ]
 
