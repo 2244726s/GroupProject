@@ -20,7 +20,7 @@ $(document).ready(function(){
 
 function validate_bot(){
     var name = $('#new_bot_name').val();
-    if(name.length > 0){
+    if(name){
 
     $.ajax({
         type: 'GET',

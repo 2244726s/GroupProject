@@ -24,12 +24,17 @@ def challenge(player1, player2,size, sorted_robots):
         battle(sorted_robots, challengee_team.bots.all())
         # delete challenge from DB
         challenge.delete()
+        return 0
     else: # counter challenge doesnt yet exist
         # create challenge
         challenger_team.robots = sorted_robots
         challenger_team.save()
-        c = Challenge(challenger = challenger_team, challengee=challengee_team, num_bots = len(sorted_robots))
-        c.save()
+        try:
+            c = Challenge(challenger = challenger_team, challengee=challengee_team, num_bots = len(sorted_robots))
+            c.save()
+            return 1
+        except:
+            return 2
         # add all the robots
 
 
@@ -48,8 +53,8 @@ def matchmake(player, robots, size, i = 10):
     challenges = find_challenge(t,size, i)
     remainder = i - len(challenges)
     if remainder > 0:
-        challenges += create_challenge(t,size, remainder)
-    return challenges
+        return challenges, create_challenge(t,size, remainder)
+    return challenges, []
 
 
 def get_matches(t,size ,i = 10):
@@ -57,8 +62,8 @@ def get_matches(t,size ,i = 10):
     challenges = find_challenge(t, size,i)
     remainder = i - len(challenges)
     if remainder > 0:
-        challenges += create_challenge(t, size, remainder)
-    return challenges
+        return challenges, create_challenge(t, size, remainder)
+    return challenges, []
 
 def sorti(best_fit, i):
 

@@ -224,8 +224,12 @@ def initialize(request):
                 t = None
 
             if t:
-                matches = get_matches(t, size)
-                return render(request, 'bots/matchmake.html',{'valid':True, 'team':[i.name for i in t.bots.all()],'games':matches,'size':size, 'msg':'Team found everything worked'})
+                received, sent = get_matches(t, size)
+                try:
+                    challenge = Challenge.objects.get(challenger = t, num_bots = size)
+                    return render(request, 'bots/matchmake.html',{'valid':True, 'team':[i.name for i in t.bots.all()],'received':received,'sent':sent,'challengee':challenge.challengee, 'size':size, 'msg':'Team found everything worked'})
+                except:
+                    return render(request, 'bots/matchmake.html',{'valid':True, 'team':[i.name for i in t.bots.all()],'received':received,'sent':sent, 'size':size, 'msg':'Team found everything worked'})
 
             else:
                 bots = Robot.objects.filter(owner = player)
@@ -247,9 +251,14 @@ def fight(request):
 
 
         my_team = Team.objects.get(player = me, num_bots = size)
-        challenge(me, them,size, my_team.bots.all())
+        dbug = challenge(me, them,size, my_team.bots.all())
 
-        return HttpResponse('Battle submitted')
+        if(dbug == 0):
+            return HttpResponse('Accepted challenge, please refresh to view result')
+        elif(dbug == 1):
+            return HttpResponse('Challenge Sent, waiting on opponent')
+        else:
+            return HttpResponse('You Have already challenged an opponent, you may not send another challenge')
 
 
 

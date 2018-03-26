@@ -74,7 +74,6 @@ function battle(i){
     return function create_battle(){
 
         var name = $(this).val();
-        alert(name);
         $.ajax({
            type: 'GET',
            url: '/bots/fight/',
@@ -100,7 +99,6 @@ function battle(i){
 
 
 $(document).ready(function(){
-    alert('test1');
     $.ajax({
        type: 'GET',
        url: "/bots/initialize/",
@@ -113,7 +111,7 @@ $(document).ready(function(){
            $('#1v1_complete').html(data);
            $('#1v1_find_game').on('click',setTeam(1));
            $('#1v1_update_team').on('click',updateTeam(1));
-           $('#1v1_play').on('click',battle(1));
+           $('.1v1_play').on('click',battle(1));
 
        },
 
@@ -132,7 +130,7 @@ $(document).ready(function(){
            $('#3v3_complete').html(data);
            $('#3v3_find_game').on('click',setTeam(3));
            $('#3v3_update_team').on('click',updateTeam(3));
-           $('#3v3_play').on('click',battle(3));
+           $('.3v3_play').on('click',battle(3));
 
 
        },
@@ -152,7 +150,7 @@ $(document).ready(function(){
            $('#5v5_complete').html(data);
            $('#5v5_find_game').on('click',setTeam(5));
            $('#5v5_update_team').on('click',updateTeam(5));
-           $('#5v5_play').on('click',battle(5));
+           $('.5v5_play').on('click',battle(5));
 
        },
 
