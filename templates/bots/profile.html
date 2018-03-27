@@ -28,8 +28,9 @@
 			{% if battleHistory %}
 				{% for battle in battleHistory %}
 
-				{{battle.log}}
-				{{battle.date}}
+				Result: {{battle.result}}
+				Date: {{battle.date}}
+
 
 				{% endfor %}
 			{% else %}
