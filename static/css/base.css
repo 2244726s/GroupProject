@@ -148,14 +148,14 @@ float:right;
 }
 
 /*sort buttons for robot leaderboards in profile page */
-#value, #wins, #all, #submit-input, #create_bot, #1v1_find_game,#3v3_find_game,#5v5_find_game {
+button {
 	
-	background-color:#6ca1cc;
+	background-color:#3641c1;
 	border: none;
 	color:white;
 }
 
-#value:active, #wins:active, #all:active, #submit-input:active, #create_bot:active {
+button:active {
 	background-color: #4f4f96;
 }
 
@@ -203,7 +203,30 @@ body{
 	background-color: #aaaaaa;
 }
 
+#matchmake-section {
+	width:90%;
+	background-color: #ededed;
+	display:inline-block;
+	border-style:dotted;
+	border-color:black;
+	text-align:center;
+	border-radius:10px;
+	overflow:auto;
+	font-family:helvetica;
+}
 
+#matchmake-sub-section{
 
+	background-color:#6ca1cc;
+	overflow: auto;
+	height: 200px;
+	margin:30px;
+	border-style: dotted;
+	border-color: black;
+	border-radius:10px;
+	text-align:center;
+	display:inline-block;
+	
 
+}
 

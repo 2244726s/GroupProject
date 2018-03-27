@@ -1,9 +1,11 @@
 {% load bots_template_tags %}
 {% load static %}
 
+<div id="matchmake-section">
+
 <div id = '{{ size }}v{{ size }}_complete'>
-    <h3>{{ size }}V{{ size }}</h3>
-    <div id="profile-section">
+    <h3 id="profile-header">{{ size }}V{{ size }}</h3>
+    <div>
         {% if valid %}
 
             {% for bot in team %}
@@ -34,10 +36,13 @@
 
     </div>
 
+    <div id="matchmake-sub-section">
+
     <div id = 'gameList'>
         {%if valid %}
-            <table>
-                <th colspan = 3>Challenges I have received</th>
+        <table>
+                <th colspan = 3><h4 id="profile-sub-header">Challenges I have received</h3></th>
+            {% if received %}
             {% for i in received %}
             <tr>
                 <td>{{ i.player.user.username }}</td>
@@ -51,18 +56,29 @@
             </tr>
             {% endfor %}
             <tr><div id = '{{ size }}_enemy_stats'></div></tr>
-            </table>
+
+
+            {% else %}
+            <tr><td>You currently have no battle requests</td></tr>
+
+            {% endif %}
+
+        </table>
+
+    </div>
+    </div>
 
 
 
 
+        <div id="matchmake-sub-section">
 
             {% if challengee %}
                 You have already challenged {{ challengee.player.user.username }}, you must either refresh your team or wait for {{ challengee.player.user.username }} to accept your challenge!
 
             {% else %}
             <table>
-                <th colspan = 3>Players ready to be challenged</th>
+                <th colspan = 3><h3 id="profile-sub-header">Players ready to be challenged</h3></th>
                 {% for i in sent %}
                 <tr>
                     <td>{{ i.player.user.username }}</td>
@@ -83,7 +99,9 @@
 
         {% endif %}
 
-
-
     </div>
+
+
+
+</div>
 </div>
