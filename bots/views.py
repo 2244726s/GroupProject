@@ -146,40 +146,9 @@ def validate(request):
         valid = valid and len(bots) > 0
         if valid:
 
-            try:
-                t = Team.objects.get(player = player, num_bots = size)
-            except:
-                t = None
+            received, sent, t = matchmake(player, bots, size)
 
-            duplicate = True
-            if t:
-
-                for i in t.bots.all():
-                    for j in bots:
-                        if i.name != j.name:
-                            duplicate = False
-
-                if duplicate:
-                    games = get_matches(t,size)
-                    msg = 'team found'
-                else:
-                    games = matchmake(player, bots, size)
-                    msg = 'team made'
-
-            else:
-                games = matchmake(player, bots, size)
-                msg = 'team made'
-
-            return render(request,'bots/matchmake.html',{
-                'valid':True,
-                'robots':bots,
-                'player':name,
-                'games':games,
-                'team':bot_names,
-                'size':size,
-                'msg':msg,
-            })
-
+            return render(request, 'bots/matchmake.html',{'valid':True, 'team':[i.name for i in t.bots.all()],'received':received,'sent':sent, 'size':size, 'msg':'Team found everything worked'})
 
 
         else:
@@ -254,11 +223,11 @@ def fight(request):
         dbug = challenge(me, them,size, my_team.bots.all())
 
         if(dbug == 0):
-            return HttpResponse('Accepted challenge, please refresh to view result')
+            return HttpResponse('Accepted challenge from '+ opponent)
         elif(dbug == 1):
-            return HttpResponse('Challenge Sent, waiting on opponent')
+            return HttpResponse('Challenge Sent to '+ opponent)
         else:
-            return HttpResponse('You Have already challenged an opponent, you may not send another challenge')
+            return HttpResponse('You Have already challenged ' + opponent +', you may not challenge another player yet')
 
 
 
@@ -288,7 +257,12 @@ def create_bot(request):
             player = None
 
         if player:
-            if Robot.objects.filter(name = name, owner = player).count() == 0:
+
+            try:
+                bot = Robot.objects.get(name = name)
+                if bot:
+                    return HttpResponse('name error-'+ name + str(Robot.objects.filter(name = name).count()))
+            except:
                 #name isn't taken
                 player.scrap -= 10
                 player.save()
@@ -305,6 +279,7 @@ def create_bot(request):
 
                 elif type == 'bipedal':
                     r = Robot.objects.create(name = name, owner = player, value = 7)
+                    r.type = type
                     r.speed = 4
                     r.dodge = 2
                     r.armour = 2
@@ -314,6 +289,7 @@ def create_bot(request):
 
                 elif type == 'wheeled':
                     r = Robot.objects.create(name = name, owner = player, value = 7)
+                    r.type = type
                     r.speed = 1
                     r.dodge = 2
                     r.armour = 4
@@ -325,8 +301,6 @@ def create_bot(request):
                     return HttpResponse('type error-' + type)
 
                 return HttpResponseRedirect('')
-            else:
-                return HttpResponse('name error-'+ name + str(Robot.objects.filter(name = name).count()))
         else:
             return HttpResponse('player error')
     else:

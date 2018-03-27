@@ -94,9 +94,11 @@ def battle(robots1, robots2):
 
         for bot in robots2:
             bot.wins += 1
+            bot.save()
 
         for bot in robots1:
             bot.losses += 1
+            bot.save()
 
     else:
         # player1 won
