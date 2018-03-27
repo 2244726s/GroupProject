@@ -125,7 +125,8 @@ def battle(robots1, robots2):
     # REPLACE WITH ACTUAL AMOUNT AS DETERMINED BY MECHANICS
     winner.scrap += reward_scrap
     loser.scrap += reward_scrap / 5
-
+    winner.save()
+    loser.save()
     # create Battle object storing info about the battle
     b = Battle(log = log)
     b.save()
