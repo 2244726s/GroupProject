@@ -53,8 +53,8 @@ def matchmake(player, robots, size, i = 10):
     challenges = find_challenge(t,size, i)
     remainder = i - len(challenges)
     if remainder > 0:
-        return challenges, create_challenge(t,size, remainder)
-    return challenges, []
+        return challenges, create_challenge(t,size, remainder), t
+    return challenges, [], t
 
 
 def get_matches(t,size ,i = 10):

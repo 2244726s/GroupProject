@@ -55,8 +55,8 @@ function create_bot(){
             'type':type,
         },
         function(data){
-            alert('new robot created, please refresh the page')
-        $('create_bot_err').html(data);
+            alert('new robot created, please refresh the page');
+            $('create_bot_err').html(data);
 
 
         });

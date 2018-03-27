@@ -25,7 +25,7 @@ function setTeam(i){
             $('#' + i.toString() +'v' +i.toString() + '_complete').html(data);
             $('#' + i.toString() + 'v' +i.toString() + '_update_team').on('click',updateTeam(i));
             $('#' + i.toString() + 'v' +i.toString() + '_find_game').on('click',setTeam(i));
-            $('#' + i.toString() + 'v' + i.toString() + '_play').on('click',battle(i));
+            $('.' + i.toString() + 'v' + i.toString() + '_play').on('click',battle(i));
         },
 
 
@@ -58,7 +58,7 @@ function updateTeam(i){
             $('#' + i.toString() +'v' +i.toString() + '_complete').html(data);
             $('#' + i.toString() + 'v' +i.toString() + '_find_game').on('click',setTeam(i));
             $('#' + i.toString() + 'v' +i.toString() + '_update_team').on('click',updateTeam(i));
-            $('#' + i.toString() + 'v' + i.toString() + '_play').on('click',battle(i));
+            $('.' + i.toString() + 'v' + i.toString() + '_play').on('click',battle(i));
         },
 
 
@@ -84,6 +84,7 @@ function battle(i){
            },
            success: function(data){
                alert(data);
+               alert('Please refresh the page now');
            }
 
 
