@@ -61,6 +61,11 @@ class Battle(models.Model):
         date = self.date.strftime('%d/%m %H:%M')
         result += ', ' + date
         #result += ', ' + str(self.date)
+        if self.log:
+            result += ', ' + self.log.split('\n')[-1]
+        else:
+            result += ', pending'
+
         return result
 
 class Team(models.Model):
@@ -71,7 +76,7 @@ class Team(models.Model):
 
 class Challenge(models.Model):
     challenger = models.OneToOneField(Team, related_name = 'challenger')
-    challengee = models.OneToOneField(Team, related_name='challengee')
+    challengee = models.ForeignKey(Team, related_name='challengee', null = True, blank = True, unique = False)
     num_bots = models.IntegerField(default = 1)
     date = models.DateField(auto_now_add = True)
 

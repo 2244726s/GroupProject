@@ -15,6 +15,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 def index(request):
     context =  {'players' : Player.objects.all().order_by('-user__date_joined')[:5]}
+    # shows the 5 most newest players
     return render(request, 'bots/index.html', context)
 
 
@@ -43,6 +44,7 @@ def show_profile(request, profile_name):
             'stats' : ['speed', 'dodge', 'armour', 'weapon', 'accuracy'],
             'battleHistory' : Battle.objects.filter(participants = player).order_by('-date')
         }
+        #returns information about a player so that their profile can be rendered
 
     return render(request, 'bots/profile.html', context)
 
@@ -92,7 +94,7 @@ def upgrade(request):
 def display_bot(request):
     if request.method == "GET":
         bot_name = request.GET.get('bot_name','')
-
+        # retrieves information about a robot so that it can be displayed
 
         try:
             bot = Robot.objects.get(name = bot_name)
@@ -100,6 +102,7 @@ def display_bot(request):
                 editable = True
             else:
                 editable = False
+                # boolean flag to indicate if the user will be able to upgrade this robot
 
             response =  render(request, 'bots/bot_table.html', {
             'robot' : bot,
@@ -115,6 +118,8 @@ def display_bot(request):
 
 
 def validate(request):
+    # validates a list of robots to check if they are unique and accessible,
+    # if valid it will then begin the matchmaking process and render lists of which can be played
     if request.method == "GET":
         size = int(request.GET.get('size',0))
         name = request.GET.get('name','')
@@ -145,13 +150,14 @@ def validate(request):
 
         valid = valid and len(bots) > 0
         if valid:
-
+            # generates 2 lists of games (ones who have challened me, and ones who I am able to challenge) and the newly formed team
             received, sent, t = matchmake(player, bots, size)
 
             return render(request, 'bots/matchmake.html',{'valid':True, 'team':[i.name for i in t.bots.all()],'received':received,'sent':sent, 'size':size, 'msg':'Team found everything worked'})
 
 
         else:
+            # the team was invalid so the matchmaking doesn't happen
             bots = Robot.objects.filter(owner = player)
             return render(request,'bots/matchmake.html',{
                 'valid':False,
@@ -164,22 +170,26 @@ def validate(request):
 
 
 def resetTeam(request):
+    #removes a players current team so that it can be updated
     if request.method == 'GET':
         size = int(request.GET.get('size',0))
         name = request.GET.get('name','')
         team = Team.objects.get(player = name, num_bots = size)
         team.delete()
+        #deletes old team
+
         player = Player.objects.get(user__username = name)
         bot_names = []
         bots = Robot.objects.filter(owner = player)
         for i in range(size):
             bot_names.append(request.GET.get('b' + str(i),''))
-
+        # git list of all robots owned by the player so that they are eligable to be added to the team
 
         return render(request, 'bots/matchmake.html',{'valid':False, 'team':bot_names,'robots':bots,'games':'','size':size, 'msg':'please update your team:'})
 
 
 def initialize(request):
+    # used to retrieve matchmaking info when a page is first loaded
     if request.method == 'GET':
         size = int(request.GET.get('size',0))
         name = request.GET.get('name','')
@@ -195,20 +205,25 @@ def initialize(request):
             if t:
                 received, sent = get_matches(t, size)
                 try:
+                    # checks if player has already challenged a different player
                     challenge = Challenge.objects.get(challenger = t, num_bots = size)
                     return render(request, 'bots/matchmake.html',{'valid':True, 'team':[i.name for i in t.bots.all()],'received':received,'sent':sent,'challengee':challenge.challengee, 'size':size, 'msg':'Team found everything worked'})
                 except:
+                    # else displays list of possible matches
                     return render(request, 'bots/matchmake.html',{'valid':True, 'team':[i.name for i in t.bots.all()],'received':received,'sent':sent, 'size':size, 'msg':'Team found everything worked'})
 
             else:
+                # no current team, so player must make one in order to matchmake
                 bots = Robot.objects.filter(owner = player)
                 return render(request, 'bots/matchmake.html',{'valid':False,'robots':bots,'size':size,'team':range(size),'msg':'no team found'})
 
         else:
+            # error no player found so returns a message saying that no player was found
             return render(request, 'bots/matchmake.html',{'valid':False, 'size':size,'msg':'player not found: ' + name})
 
 
 def fight(request):
+    # sends a battle request to another player
     if request.method == 'GET':
         name = request.GET.get('name','')
         size = int(request.GET.get('size',''))
@@ -223,10 +238,13 @@ def fight(request):
         dbug = challenge(me, them,size, my_team.bots.all())
 
         if(dbug == 0):
+            # you have accepted another players challenge and the battle has been completed
             return HttpResponse('Accepted challenge from '+ opponent)
         elif(dbug == 1):
-            return HttpResponse('Challenge Sent to '+ opponent)
+            # you have sent a challenge to another player but they have not yet accepted it
+            return HttpResponse('Challenge Sent to '+ opponent + ' they must accept before the match commences')
         else:
+            # you have already sent a different player a challenge and cannot send one to another
             return HttpResponse('You Have already challenged ' + opponent +', you may not challenge another player yet')
 
 
@@ -237,6 +255,7 @@ def fight(request):
 
 
 def validate_name(request):
+    # checks to see if the name given to a new robot is
     if request.method == 'GET':
         name = request.GET.get('name','')
         type = request.GET.get('type','')
@@ -247,7 +266,7 @@ def validate_name(request):
 
 @csrf_exempt
 def create_bot(request):
-
+    # validates to check if a name is unique, then creates the attributes of the robot based off its type
     if request.method == 'GET':
         name = request.GET.get('name','error')
         type = request.GET.get('type','error')
@@ -301,12 +320,14 @@ def create_bot(request):
                     return HttpResponse('type error-' + type)
 
                 return HttpResponseRedirect('')
+                # returns to page
         else:
             return HttpResponse('player error')
     else:
         return HttpResponse(request.method)
 
 def leaderboards(request):
+    # gets data about the most winning robots, and the most winning players
     context = {
         'top_bots' : Robot.objects.order_by('-wins')[:10],
         'top_users' : Player.objects.order_by('-wins')[:10]
@@ -315,9 +336,11 @@ def leaderboards(request):
     return render(request, 'bots/leaderboards.html', context)
 
 def about(request):
+    # renders the about page
     return render(request, 'bots/about.html')
 
 def signin(request):
+    # validates a users attempt to sign in
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -337,6 +360,7 @@ def signin(request):
 
 
 def signup(request):
+    # processes a new users attempt to sign up
     registered = False
     if request.method == 'POST':
         user_form = UserForm(data=request.POST)
@@ -355,6 +379,7 @@ def signup(request):
 
 @login_required
 def signout(request):
+    # allows a user to sign out, only rendered to users who are currently signed in
     logout(request)
     return HttpResponseRedirect(reverse('index'))
 
