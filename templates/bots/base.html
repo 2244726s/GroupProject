@@ -2,20 +2,23 @@
 {% load bots_template_tags %}
 {% load staticfiles %}
 
-
 <html>
 		<head lang="en">
 			<meta charset="UTF-8" />
-
-
+			<!-- Stylesheet -->
 			<link rel="stylesheet" type="text/css" href="{%static 'css/base.css' %}">
+
+			<!-- ICON shown beside the title in the browser -->
 			<link rel="icon" href="{% static 'images/icon.ico' %} ">
+
+			<!-- START TITLE -->
 			<title>
 				SCRAPBOTS |
 				{% block title_block %}
 					PLAY!
 				{% endblock %}
 			</title>
+			<!-- END TITLE -->
 
 		</head>
 
@@ -23,21 +26,27 @@
 		<!-- Navigation Bar-->
 		<div id="nav-bar">
 
+			<!-- navigation links -->
 			<a id="logo" href="{% url 'index' %}"> <strong id = "logo"> SCRAPBOTS </strong> </a>
 			<a id="nav-link" href="{% url 'bots:leaderboards' %}"> LEADERBOARDS </a>
 			<a id="nav-link" href="{% url 'bots:about' %}"> ABOUT </a>
+			<!-- END NAVIGATION LINKS -->
 
 			{% if user.is_authenticated %}				
 			<div id="dropdown">
 			<button id=play> Signed in as {{ user.username }} ▼</button>
 				<!--menu-->
+				<!-- Is rendered if there is no user logged in -->
 
 				<div id="menu">
 				<a id="dropdown-link" href="{% url 'bots:show_profile' user.username %}"> View Profile </a> <br>
 				<a id="dropdown-link" href="{% url 'bots:signout' %}"> Sign Out </a>
 				</div>
 
+				<!-- END MENU -->
+
 			</div>
+
 			{% else %}
 
 			<!--will make a dropdown button for play and when hovered will display the menu-->
@@ -45,11 +54,14 @@
 			<div id="dropdown">
 			<button id=play> PLAY ▼</button>
 				<!--menu-->
+				<!-- is rendered when user is logged in -->
 
 				<div id="menu">
 				<a id="dropdown-link" href="{% url 'bots:signin' %}"> Sign in </a> <br>
 				<a id="dropdown-link" href="{% url 'bots:signup' %}"> Sign Up </a>
 				</div>
+
+				<!-- END MENU -->
 
 			</div>
 
@@ -66,6 +78,8 @@
 			{% endblock %}
 		</div>
 		<!-- END CONTENT -->
+
+		<!-- SCRIPTS -->
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 		<script src="{% static 'js/jquery.js' %}"></script>

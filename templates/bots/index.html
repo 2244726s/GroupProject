@@ -9,27 +9,22 @@ Home
 
 <div id="section">
 
+<!-- index page will show newest user to have joined the web app -->
 <h3 id="profile-header" > Newest Users </a>
 <table>
 {% for player in players %}
     <tr>
         <td>
             <a id="dropdown-link" href="{% url 'bots:show_profile' player.user.username %}">{{ player.user.username }}</a>
-
-
         </td>
         <td>
             <h4 id="profile-sub-header">{{ player.user.date_joined }}</h4>
 
         </td>
-
-
-
     </tr>
 {% endfor %}
 </table>
 
 </div>
-
 
 {% endblock %}

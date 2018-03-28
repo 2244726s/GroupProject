@@ -3,19 +3,18 @@
 
 <div id="matchmake-section">
 
+<!-- battle requests received -->
 <div id = '{{ size }}v{{ size }}_complete'>
     <h3 id="profile-header">{{ size }}V{{ size }} Battle</h3>
     <div>
         {% if valid %}
-
             {% for bot in team %}
-
 
                 <div id = '{{ size }}v{{ size }}_{{ forloop.counter0 }}'>{{ bot }}</div>
 
-
             {% endfor %}
-                <div><button id = '{{ size }}v{{ size }}_find_game'>Refresh Team!</button></div>
+               
+            <div><button id = '{{ size }}v{{ size }}_find_game'>Refresh Team!</button></div>
 
         {% else %}
                 {% for bot in team %}
@@ -29,6 +28,7 @@
                     </select>
 
                 {% endfor %}
+
                     <button id = '{{ size }}v{{ size }}_find_game'>Find Game!</button>
 
         {% endif %}
@@ -38,6 +38,7 @@
 
     <div id="matchmake-sub-section">
 
+    <!-- users open for battle -->
     <div id = 'gameList'>
         {%if valid %}
         <table>

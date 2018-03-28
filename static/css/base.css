@@ -10,7 +10,7 @@
 	border-radius: 10px;
 }
 
-/* SCRAPBOTS */
+/* SCRAPBOTS logo */
 #logo { 
 	font-family:Impact;
 	font-size:40px;
@@ -19,7 +19,7 @@
 	color:white;
 }
 
-/* leaderboard, about */
+/* leaderboard, about links */
 #nav-link {
 	color:white;
 	padding:10px;
@@ -53,6 +53,7 @@ float:right;
     font-size: 16px	
 }
 
+/*the box that represents the dropdown menu */
 #menu{
 	background-color:#6ca1cc;
 	box-shadow: 2px 2px 1px #aaaaaa;
@@ -61,6 +62,7 @@ float:right;
 	position:absolute;
 }
 
+/* links in the dropdown menu */
 #dropdown-link{
 	font-family: helvetica;
 	font-weight: bold;
@@ -86,22 +88,10 @@ float:right;
 	font-weight: 20px;
 }
 
-/* sections for player info, robots and friends */
-#profile-section{
-	width:30%;
-	background-color: #ededed;	
-	height:600px;
-	display:inline-block;
-	border-style:dotted;
-	border-color:black;
-	text-align:center;
-	border-radius:10px;
-	overflow:auto;
-	font-family:helvetica;
-}
 
 
-/* section for overall leaderboards */
+
+/* section for overall leaderboards and newest users on index page */
 #section{
 	width:30%;
 	background-color: #ededed;
@@ -116,11 +106,45 @@ float:right;
 	text-align:center;
 	font-family: Helvetica;
 }
+
+/* uniform buttons across all of the web app */
+button {
+	
+	background-color:#3641c1;
+	border: none;
+	color:white;
+}
+
+
+/*when button is clicked */
+button:active {
+	background-color: #4f4f96;
+}
+
+
+/*body tag*/
+body{
+	background-color: #aaaaaa;
+}
+
 /* -------------------END body styling---------------------- */
 
 
+/* --------------START PROFILE PAGE STYLING------------------- */
 
-/* text formatting */
+/* sections for player info, robots and friends */
+#profile-section{
+	width:30%;
+	background-color: #ededed;	
+	height:600px;
+	display:inline-block;
+	border-style:dotted;
+	border-color:black;
+	text-align:center;
+	border-radius:10px;
+	overflow:auto;
+	font-family:helvetica;
+}
 
 /*header containing username in profile page */
 #username{
@@ -147,18 +171,7 @@ float:right;
 	
 }
 
-/*sort buttons for robot leaderboards in profile page */
-button {
-	
-	background-color:#3641c1;
-	border: none;
-	color:white;
-}
-
-button:active {
-	background-color: #4f4f96;
-}
-
+/* sub-sections within the profile divisions that hold lists */
 #bots-section {
 	background-color:#6ca1cc;
 	overflow: auto;
@@ -171,6 +184,7 @@ button:active {
 	
 }
 
+/* a list of bots, all, by value, by wins */
 #bot-list{
 	
 	list-style-type:none;
@@ -178,13 +192,7 @@ button:active {
 	
 }
 
-#bot-list-item{
-	
-	font-family:helvetica;
-	color:white;
-	
-}
-
+/* bot statistics and upgrading */
 #bot_table{
 	
 	color:white;
@@ -194,15 +202,21 @@ button:active {
 	
 }
 
+/* each individual entry in a bot list */
+#bot-list-item{
+	
+	font-family:helvetica;
+	color:white;
+	
+}
+
+/* error messages when a list in the context dict is empty */
 #errorMessage{
 	font-family:helvetica;
 	color:white;
 }
 
-body{
-	background-color: #aaaaaa;
-}
-
+/*div positioned bellow the three other divs in profile page for matchmaking and battles */
 #matchmake-section {
 	width:92%;
 	background-color: #ededed;
@@ -214,7 +228,7 @@ body{
 	overflow:auto;
 	font-family:helvetica;
 }
-
+/* sections holding the battle requests and available users to battle */
 #matchmake-sub-section{
 
 	background-color:#6ca1cc;
@@ -229,4 +243,9 @@ body{
 	
 
 }
+
+/* ------ END PROFILE PAGE -------- */
+
+
+
 

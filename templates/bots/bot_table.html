@@ -1,10 +1,13 @@
 {% load bots_template_tags %}
 
 <div>
-
     <div id = 'display_bot'>
+
+        <!-- If user owns at least one robot -->
         {% if robot %}
             <table>
+
+                <!-- displaying the selected robot's stats -->
                 <tr><td>Type</td><td>{{ robot.type }}</td></tr>
                 <tr><td>Wins</td><td>{{ robot.wins }}</td></tr>
                 <tr><td>Losses</td><td>{{ robot.losses }}</td></tr>
@@ -12,6 +15,7 @@
 		        <tr><td>{{ stat }}</td><td>{{ value }}</td>
 			        {% if player.scrap|add:0 >= value|mult:25 %}
 			        <td>
+                        <!-- if user has enough scrap they can upgrade a stat -->
 			            {% if editable %}
 			        	<button class="stat-increase" data-stat="{{ stat }}" data-botid="{{ robot.name }}">+</button>
 			        	{% endif %}
@@ -23,9 +27,8 @@
 
             </table>
 
-
+        <!-- if user doesn't own any robots  -->
         {% else %}
-
             You don't currently own any Robots!
         {% endif %}
     </div>

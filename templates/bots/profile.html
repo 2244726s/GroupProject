@@ -22,25 +22,24 @@
 		<b>Playing since:</b> <br>
 		{{ player.user.date_joined }} <br>
 
+		<!-- battle history -->
 		<h3 id="profile-sub-header">Battle History</h3>
 		<div id="bots-section">
 
 			{% if battleHistory %}
 				{% for battle in battleHistory %}
-
 				{{battle}}<br>
-
-
 				{% endfor %}
 			{% else %}
 				<div id='errorMessage'>No battle history</div>
 			{% endif %}
 
-
-
 		</div>
+		<!-- end battle history -->
+
 	</div>
 	<!--END PROFILE SIDEBAR-->
+	
 	<!--START ROBOTS SECTION-->
 	<div id="profile-section">
 		<h3 id="profile-header"> Robots </h3>

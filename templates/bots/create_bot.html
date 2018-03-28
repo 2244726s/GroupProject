@@ -5,8 +5,10 @@
     <h3>Create a New Robot</h3>
 
 
+    <!-- if user has scrap more than 7 -->
     {% if player.scrap >= 7 %}
 
+    <!-- can create a robot of either type aerial, bipedal or wheeled -->
         <form name = 'CreateBot'>
             Name: <input id = 'new_bot_name' type = 'text' required>
             Type:
@@ -22,9 +24,7 @@
 
         <div id = 'create_bot_err'></div>
 
-
-
-
+    <!-- if user doesn't have enough scrap -->
     {% else %}
 
         <strong>You don't have enough Scrap to make a new Robot!</strong>
