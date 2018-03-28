@@ -19,6 +19,7 @@ $(document).ready(function(){
 
 
 function validate_bot(){
+    // whenever a new name is entered, send it to the validate view, then render the response underneath the text box
     var name = $('#new_bot_name').val();
     if(name){
 
@@ -43,8 +44,9 @@ function validate_bot(){
 }
 
 function create_bot(){
-
+    // creates a new robot given a name and type.
     event.preventDefault();
+    // stops a form automatically submitting
     var name = $('#new_bot_name').val();
     var type = $('#type_selector').find(':selected').val();
 
@@ -62,24 +64,4 @@ function create_bot(){
         });
 
 
-    /*
-    $.ajax({
-
-        type: 'POST',
-        url: "/bots/create_bot/",
-        data: {
-        'name':name,
-        'type':type,
-        },
-        success: function(data) {
-        $('#create_bot').html(data.msg);
-        if( $('#create_bot').html() == 'valid'){
-            //location.reload(true);
-            // reload the page with updated info from the server
-        }
-
-    },
-
-    });
-    */
 }

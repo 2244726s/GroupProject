@@ -72,7 +72,7 @@ function updateTeam(i){
 function battle(i){
 
     return function create_battle(){
-
+    // sends a challenge to a valid opponent to be processed by the battle view
         var name = $(this).val();
         $.ajax({
            type: 'GET',
@@ -100,6 +100,8 @@ function battle(i){
 
 
 $(document).ready(function(){
+    // initializes matchmaking so that it renders automatically, assigns event listeners to all buttons within the matchmaking section
+    // repeated for each size of team
     $.ajax({
        type: 'GET',
        url: "/bots/initialize/",

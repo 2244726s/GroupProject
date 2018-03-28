@@ -25,12 +25,13 @@ def battle(robots1, robots2):
     health1 = 8 + (math.ceil(float(robot1.armour) / 2.0))
     health2 = 0
 
+    # log
     # for storing the battle log with details of turn by turn action, which user will view when reviewing this battle
 
 
     p1win = True
     winHealth = 8 + (math.ceil(float(robot2.armour) / 2.0))
-
+    # ensures that the newest robot comes in at full health, rather than the health of their predecessor i.e. 0
 
     while(index1 < len(robots1) and index2 < len(robots2)):
         robot1 = robots1[index1]
@@ -61,6 +62,7 @@ def battle(robots1, robots2):
                 health1 -= damage
                 delay2 += robot2.speed
                 log = log + updateLog(robot2,robot1,damage, health1)
+    # simulates battle between 2 robots
 
 
 
@@ -81,7 +83,7 @@ def battle(robots1, robots2):
             index1 += 1
             if(index1 < len(robots1)):
                 log = log + ", %s has entered the frey! \n"%(robots1[index1].name)
-
+        #updates log and robot roster
 
     winner_scrap = 0
     loser_scrap = 0
@@ -110,12 +112,13 @@ def battle(robots1, robots2):
 
         for bot in robots1:
             bot.wins += 1
-
+            bot.save()
         for bot in robots2:
             bot.losses += 1
+            bot.save()
 
     reward_scrap = get_scrap(len(robots1),winner_scrap,loser_scrap)
-    log = log + "\n %s wins!"%(str(winner))
+    log = log + "\n %s won!"%(str(winner))
     # debugging purposes only: log = log + "\n \n %s gets %d scrap and %s gets %d scrap"%(str(winner),reward_scrap,str(loser),reward_scrap/5)
     winner.wins += 1
     loser.losses += 1
@@ -135,6 +138,7 @@ def battle(robots1, robots2):
     b.participants.add(winner)
     b.participants.add(loser)
     b.save()
+    # updates players and robots involved, awards scrap to the winner and loser, creates a battle and returns it
     return b
 
 
